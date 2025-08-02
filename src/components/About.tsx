@@ -12,15 +12,15 @@ const About = () => {
   ];
 
   return (
-    <section className="py-24 bg-secondary/30">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-4xl lg:text-5xl font-bold text-foreground">
+    <section className="py-16 lg:py-24 bg-secondary/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-16 xl:gap-20 items-center">
+          <div className="space-y-8 lg:space-y-12">
+            <div className="space-y-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
                 Sobre o Dr. Silva
               </h2>
-              <div className="h-1 w-20 bg-accent"></div>
+              <div className="h-1 w-24 bg-gradient-to-r from-accent to-accent/60"></div>
             </div>
             
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
@@ -45,8 +45,8 @@ const About = () => {
           </div>
           
           <div className="mt-12 lg:mt-0">
-            <Card className="bg-card border-border shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8">
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-2xl hover:shadow-accent/10 hover:border-accent/30 transition-all duration-500 group">
+              <CardContent className="p-6 lg:p-8">
                 <div className="space-y-6">
                   <h3 className="text-2xl font-semibold text-foreground">
                     Especialidades

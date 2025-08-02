@@ -13,14 +13,14 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-20">
+          {/* Premium Logo */}
           <div className="flex-shrink-0">
-            <div className="text-2xl font-bold">
+            <div className="text-xl lg:text-2xl font-bold tracking-tight">
               <span className="text-foreground">SILVA</span>
-              <span className="text-accent"> Tributário</span>
+              <span className="text-accent bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent"> Tributário</span>
             </div>
           </div>
 
@@ -37,9 +37,9 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Desktop CTA Button */}
+          {/* Premium Desktop CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <Button className="bg-accent text-accent-foreground hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-all duration-300 px-6 py-2.5 font-semibold">
               Agendar Consulta
             </Button>
           </div>
