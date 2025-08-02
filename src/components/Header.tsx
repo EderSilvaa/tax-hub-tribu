@@ -13,33 +13,33 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Premium Logo */}
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/30">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16">
+          {/* Clean Logo */}
           <div className="flex-shrink-0">
-            <div className="text-xl lg:text-2xl font-bold tracking-tight">
+            <div className="text-lg sm:text-xl font-light tracking-wide">
               <span className="text-foreground">SILVA</span>
-              <span className="text-accent bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent"> Tributário</span>
+              <span className="text-accent font-medium"> Tributário</span>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          {/* Minimal Desktop Navigation */}
+          <nav className="hidden md:flex space-x-6 lg:space-x-8">
             {navigation.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-muted-foreground hover:text-accent transition-colors duration-200 font-medium"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
               >
                 {item.name}
               </a>
             ))}
           </nav>
 
-          {/* Premium Desktop CTA Button */}
+          {/* Minimal Desktop CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-accent text-accent-foreground hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-all duration-300 px-6 py-2.5 font-semibold">
+            <Button size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-colors duration-200 px-4 py-2 text-sm font-medium">
               Agendar Consulta
             </Button>
           </div>
@@ -48,29 +48,29 @@ const Header = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-muted-foreground hover:text-accent transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors p-1"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Clean Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-card border-t border-border">
+            <div className="px-4 pt-2 pb-4 space-y-2 bg-background border-t border-border/30">
               {navigation.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block px-3 py-2 text-muted-foreground hover:text-accent transition-colors duration-200"
+                  className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </a>
               ))}
-              <div className="px-3 py-2">
-                <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
+              <div className="px-2 pt-2">
+                <Button size="sm" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 py-2 text-sm font-medium">
                   Agendar Consulta
                 </Button>
               </div>

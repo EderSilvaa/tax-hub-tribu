@@ -2,27 +2,27 @@ import { MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <div className="text-3xl font-bold">
-              <span className="text-primary-foreground">SILVA</span>
-              <span className="text-accent"> Tributário</span>
+    <footer className="bg-card border-t border-border/30">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {/* Clean Brand */}
+          <div className="space-y-3 sm:space-y-4">
+            <div className="text-xl sm:text-2xl font-light tracking-wide">
+              <span className="text-foreground">SILVA</span>
+              <span className="text-accent font-medium"> Tributário</span>
             </div>
-            <p className="text-primary-foreground/80 leading-relaxed">
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-light">
               Especialista em Direito Tributário com mais de 15 anos de experiência, 
               oferecendo soluções eficientes e personalizadas.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-primary-foreground">
+          <div className="space-y-3 sm:space-y-4">
+            <h3 className="text-sm sm:text-base font-medium text-foreground">
               Links Rápidos
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1 sm:space-y-2">
               {[
                 { name: "Início", href: "#home" },
                 { name: "Sobre", href: "#about" },
@@ -32,7 +32,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-primary-foreground/80 hover:text-accent transition-colors duration-200"
+                    className="text-xs sm:text-sm text-muted-foreground hover:text-accent transition-colors duration-200 font-light"
                   >
                     {link.name}
                   </a>
@@ -42,27 +42,27 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-primary-foreground">
+          <div className="space-y-3 sm:space-y-4">
+            <h3 className="text-sm sm:text-base font-medium text-foreground">
               Contato
             </h3>
-            <div className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                <div className="text-primary-foreground/80 text-sm">
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex items-start space-x-2 sm:space-x-3">
+                <MapPin className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                <div className="text-muted-foreground text-xs sm:text-sm font-light">
                   <div>Av. Paulista, 1000 - 15º Andar</div>
                   <div>Bela Vista, São Paulo - SP</div>
                 </div>
               </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-accent flex-shrink-0" />
-                <div className="text-primary-foreground/80 text-sm">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+                <div className="text-muted-foreground text-xs sm:text-sm font-light">
                   (11) 3456-7890
                 </div>
               </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-accent flex-shrink-0" />
-                <div className="text-primary-foreground/80 text-sm">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <Mail className="w-4 h-4 text-accent flex-shrink-0" />
+                <div className="text-muted-foreground text-xs sm:text-sm font-light">
                   contato@silvatributario.com.br
                 </div>
               </div>
@@ -70,12 +70,12 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/20 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-primary-foreground/60 text-sm">
+        <div className="border-t border-border/30 mt-6 sm:mt-8 pt-6 sm:pt-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
+            <div className="text-muted-foreground text-xs font-light">
               © 2024 Silva Tributário. Todos os direitos reservados.
             </div>
-            <div className="flex space-x-6 text-sm text-primary-foreground/60">
+            <div className="flex space-x-4 sm:space-x-6 text-xs text-muted-foreground font-light">
               <a href="#" className="hover:text-accent transition-colors">
                 Política de Privacidade
               </a>

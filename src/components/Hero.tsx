@@ -3,55 +3,51 @@ import heroImage from "@/assets/hero-law-office.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Premium Overlay */}
+    <section className="min-h-screen flex items-center justify-center bg-background">
+      {/* Minimal background with subtle overlay */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
         style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-background/98 via-background/90 to-background/85" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-      </div>
+      />
+      <div className="absolute inset-0 bg-background/80" />
       
-      {/* Premium Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center lg:text-left">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-          <div className="space-y-8 lg:space-y-12">
-            <div className="space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-none">
-                <span className="text-foreground drop-shadow-lg">SILVA</span>
-                <br />
-                <span className="text-accent drop-shadow-lg bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent">Tributário</span>
-              </h1>
-              <div className="h-1 w-24 bg-gradient-to-r from-accent to-accent/60 mx-auto lg:mx-0"></div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Especialista em Direito Tributário com mais de 15 anos de experiência 
-                em consultoria estratégica e contencioso fiscal de alta complexidade.
-              </p>
-            </div>
+      {/* Clean, minimal content */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-8 sm:space-y-12">
+          <div className="space-y-4 sm:space-y-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-none">
+              <span className="text-foreground font-normal">SILVA</span>
+              <br />
+              <span className="text-accent font-medium">Tributário</span>
+            </h1>
+            <div className="w-16 h-px bg-accent mx-auto"></div>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-light">
+              Especialista em Direito Tributário com mais de 15 anos de experiência 
+              em consultoria estratégica e contencioso fiscal.
+            </p>
+          </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center lg:justify-start">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-all duration-300 px-8 py-4 text-lg font-semibold backdrop-blur-sm">
-                Agendar Consulta
-              </Button>
-              <Button variant="outline" size="lg" className="border-2 border-accent/30 text-accent hover:bg-accent/10 hover:border-accent hover:shadow-lg backdrop-blur-sm px-8 py-4 text-lg transition-all duration-300">
-                Nossos Serviços
-              </Button>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md mx-auto">
+            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-colors duration-200 px-8 py-3 font-medium">
+              Agendar Consulta
+            </Button>
+            <Button variant="outline" size="lg" className="border border-accent/20 text-accent hover:bg-accent/5 hover:border-accent/40 transition-all duration-200 px-8 py-3 font-medium">
+              Nossos Serviços
+            </Button>
+          </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 pt-8 lg:pt-12">
-              <div className="text-center lg:text-left group">
-                <div className="text-3xl lg:text-4xl font-bold text-accent group-hover:scale-105 transition-transform duration-300">500+</div>
-                <div className="text-muted-foreground text-sm lg:text-base font-medium">Casos Resolvidos</div>
-              </div>
-              <div className="text-center lg:text-left group">
-                <div className="text-3xl lg:text-4xl font-bold text-accent group-hover:scale-105 transition-transform duration-300">15</div>
-                <div className="text-muted-foreground text-sm lg:text-base font-medium">Anos de Experiência</div>
-              </div>
-              <div className="text-center lg:text-left group">
-                <div className="text-3xl lg:text-4xl font-bold text-accent group-hover:scale-105 transition-transform duration-300">98%</div>
-                <div className="text-muted-foreground text-sm lg:text-base font-medium">Taxa de Sucesso</div>
-              </div>
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-12 sm:pt-16 max-w-lg mx-auto">
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl font-medium text-accent">500+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Casos Resolvidos</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl font-medium text-accent">15</div>
+              <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Anos de Experiência</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl font-medium text-accent">98%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Taxa de Sucesso</div>
             </div>
           </div>
         </div>
