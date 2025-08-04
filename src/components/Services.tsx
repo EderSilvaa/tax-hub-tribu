@@ -4,34 +4,34 @@ import { Button } from "@/components/ui/button";
 const Services = () => {
   const services = [
     {
-      title: "Planejamento Tributário",
-      description: "Análise completa da estrutura tributária da sua empresa para otimização legal dos impostos e redução da carga fiscal.",
-      features: ["Análise de regime tributário", "Estruturação societária", "Elisão fiscal", "Reorganização empresarial"]
+      title: "Recuperação de Tributos",
+      description: "Identifico tributos pagos a maior pela sua empresa e trabalho para recuperar esses valores, transformando isso em economia real.",
+      features: ["Análise de recolhimentos", "Pedidos de restituição", "ICMS pago indevidamente", "PIS/COFINS recuperação"]
     },
     {
-      title: "Contencioso Fiscal",
-      description: "Defesa em processos administrativos e judiciais, representação em órgãos fiscalizadores e recursos em todas as instâncias.",
-      features: ["Defesa em autuações", "Recursos administrativos", "Ações judiciais", "Parcelamentos fiscais"]
+      title: "Isenções para Pequenas Empresas",
+      description: "Analiso se sua empresa tem direito a isenções fiscais e benefícios tributários específicos para pequenos negócios.",
+      features: ["Simples Nacional", "MEI - Microempreendedor", "Isenções setoriais", "Benefícios regionais"]
+    },
+    {
+      title: "Consultoria Preventiva",
+      description: "Orientação para evitar problemas fiscais futuros e garantir que sua empresa esteja sempre em dia com as obrigações.",
+      features: ["Orientação fiscal", "Compliance básico", "Regularização", "Planejamento simples"]
+    },
+    {
+      title: "Defesa em Autuações",
+      description: "Represento sua empresa em fiscalizações e autuações, buscando reduzir ou anular multas e penalidades aplicadas.",
+      features: ["Defesa administrativa", "Recursos", "Parcelamentos", "Negociação de débitos"]
+    },
+    {
+      title: "Imposto de Renda",
+      description: "Assessoria completa para declaração de IR de pessoas físicas e pequenas empresas, maximizando restituições.",
+      features: ["Declaração de IR", "Restituição máxima", "Retificação", "Regularização CPF"]
     },
     {
       title: "Consultoria Especializada",
-      description: "Assessoria preventiva e consultiva em questões tributárias complexas, garantindo compliance e segurança jurídica.",
-      features: ["Pareceres técnicos", "Due diligence tributária", "Compliance fiscal", "Consultoria ICMS/IPI"]
-    },
-    {
-      title: "Recuperação de Créditos",
-      description: "Identificação e recuperação de créditos tributários indevidos, repetição de indébito e compensações fiscais.",
-      features: ["Análise de recolhimentos", "Pedidos de restituição", "Compensações", "Precatórios"]
-    },
-    {
-      title: "Pessoa Física",
-      description: "Assessoria tributária completa para pessoas físicas, incluindo Imposto de Renda e planejamento sucessório.",
-      features: ["Declaração de IR", "Planejamento sucessório", "Investimentos", "Regularização fiscal"]
-    },
-    {
-      title: "Direito Aduaneiro",
-      description: "Consultoria especializada em comércio exterior, classificação fiscal e regimes aduaneiros especiais.",
-      features: ["Importação/Exportação", "Classificação NCM", "Regimes especiais", "Defesa aduaneira"]
+      description: "Atendimento focado em pequenas empresas que precisam de orientação tributária clara e objetiva.",
+      features: ["Análise personalizada", "Relatórios simples", "Orientação presencial", "Suporte contínuo"]
     }
   ];
 
@@ -44,8 +44,8 @@ const Services = () => {
           </h2>
           <div className="h-1 w-20 bg-accent mx-auto mb-6"></div>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Oferecemos soluções completas em Direito Tributário, desde consultoria preventiva 
-            até representação em contenciosos complexos.
+            Foco em soluções práticas para recuperação tributária e economia fiscal, 
+            especialmente para pequenas empresas e empreendedores.
           </p>
         </div>
 

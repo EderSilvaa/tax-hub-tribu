@@ -37,16 +37,16 @@ const Hero = () => {
             
           <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-12 sm:pt-16 max-w-lg mx-auto">
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-medium text-accent">500+</div>
+              <div className="text-2xl sm:text-3xl font-medium text-accent">50+</div>
               <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Casos Resolvidos</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-medium text-accent">15</div>
-              <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Anos de Experiência</div>
+              <div className="text-2xl sm:text-3xl font-medium text-accent">100%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Dedicação</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-medium text-accent">98%</div>
-              <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Taxa de Sucesso</div>
+              <div className="text-2xl sm:text-3xl font-medium text-accent">24h</div>
+              <div className="text-xs sm:text-sm text-muted-foreground font-light mt-1">Resposta</div>
             </div>
           </div>
         </div>

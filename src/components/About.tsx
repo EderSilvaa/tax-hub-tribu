@@ -3,12 +3,12 @@ import { Badge } from "@/components/ui/badge";
 
 const About = () => {
   const specializations = [
-    "Planejamento Tributário",
-    "Contencioso Fiscal",
-    "Compliance Tributário",
-    "Consultoria ICMS",
+    "Recuperação de Tributos",
+    "Pequenas Empresas",
+    "Restituição de ICMS",
+    "Consultoria PIS/COFINS",
     "Imposto de Renda",
-    "Direito Aduaneiro"
+    "Isenções Fiscais"
   ];
 
   return (
@@ -18,28 +18,28 @@ const About = () => {
           <div className="space-y-6 sm:space-y-8">
             <div className="space-y-4">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-foreground leading-tight">
-                Sobre o Dr. Silva
+                Sobre o Advogado
               </h2>
               <div className="w-12 h-px bg-accent"></div>
             </div>
             
             <div className="space-y-4 sm:space-y-6 text-sm sm:text-base text-muted-foreground leading-relaxed font-light">
               <p>
-                Com mais de 15 anos de experiência em Direito Tributário, Dr. Silva 
-                consolidou-se como um dos principais especialistas da região, oferecendo 
-                soluções estratégicas e eficientes para empresas e pessoas físicas.
+                Atuo com foco em estratégias de recuperação tributária e isenções para pequenas empresas, 
+                buscando sempre identificar oportunidades de economia fiscal que façam diferença real 
+                no orçamento dos meus clientes.
               </p>
               
               <p>
-                Graduado em Direito pela Universidade de São Paulo (USP) e pós-graduado 
-                em Direito Tributário pela Fundação Getúlio Vargas (FGV), possui vasta 
-                experiência tanto no contencioso quanto na consultoria preventiva.
+                Graduado em Direito e especializado em Direito Tributário, dedico-me a estudar 
+                constantemente as mudanças na legislação fiscal para oferecer soluções atualizadas 
+                e eficientes para cada situação específica.
               </p>
               
               <p>
-                Seu compromisso é oferecer um atendimento personalizado, buscando sempre 
-                as melhores alternativas legais para otimização tributária e resolução 
-                de conflitos fiscais.
+                Meu compromisso é oferecer um atendimento personalizado e próximo, explicando 
+                cada etapa do processo de forma clara e transparente, para que você entenda 
+                exatamente como podemos recuperar seus recursos.
               </p>
             </div>
           </div>
@@ -67,10 +67,10 @@ const About = () => {
                   <div className="pt-4 border-t border-border/30">
                     <h4 className="font-medium text-foreground mb-3 text-sm">Formação</h4>
                     <div className="space-y-1 text-xs text-muted-foreground font-light">
-                      <div>• Graduação em Direito - USP</div>
-                      <div>• Pós-graduação em Direito Tributário - FGV</div>
-                      <div>• MBA em Gestão Tributária - IBMEC</div>
+                      <div>• Graduação em Direito</div>
+                      <div>• Especialização em Direito Tributário</div>
                       <div>• Membro da OAB/SP</div>
+                      <div>• Cursos de Atualização Fiscal</div>
                     </div>
                   </div>
                 </div>
