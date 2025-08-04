@@ -22,8 +22,7 @@ const Hero = () => {
             </h1>
             <div className="w-16 h-px bg-accent mx-auto"></div>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-light">
-              Especialista em Direito Tributário com mais de 15 anos de experiência 
-              em consultoria estratégica e contencioso fiscal.
+              Especializado em identificar tributos pagos a maior e transformar isso em economia pro cliente.
             </p>
           </div>
             
