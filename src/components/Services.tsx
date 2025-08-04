@@ -39,7 +39,7 @@ const Services = () => {
     <section className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-4xl lg:text-5xl font-open-ring font-bold text-foreground mb-4">
             Nossos Serviços
           </h2>
           <div className="h-1 w-20 bg-accent mx-auto mb-6"></div>
@@ -56,7 +56,7 @@ const Services = () => {
               className="bg-card border-border hover:bg-card-hover transition-all duration-300 hover:shadow-lg group"
             >
               <CardHeader className="pb-4">
-                <CardTitle className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
+                <CardTitle className="text-xl font-open-ring font-semibold text-foreground group-hover:text-accent transition-colors">
                   {service.title}
                 </CardTitle>
               </CardHeader>

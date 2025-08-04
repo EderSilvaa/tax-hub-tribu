@@ -17,7 +17,7 @@ const About = () => {
         <div className="lg:grid lg:grid-cols-2 lg:gap-12 xl:gap-16 items-start">
           <div className="space-y-6 sm:space-y-8">
             <div className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-foreground leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-open-ring font-light text-foreground leading-tight">
                 Sobre o Advogado
               </h2>
               <div className="w-12 h-px bg-accent"></div>
@@ -48,9 +48,9 @@ const About = () => {
             <Card className="bg-card border-border/30 hover:border-accent/20 transition-colors duration-300">
               <CardContent className="p-6 sm:p-8">
                 <div className="space-y-6">
-                  <h3 className="text-lg sm:text-xl font-medium text-foreground">
-                    Especialidades
-                  </h3>
+                   <h3 className="text-lg sm:text-xl font-open-ring font-medium text-foreground">
+                     Especialidades
+                   </h3>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {specializations.map((spec, index) => (
