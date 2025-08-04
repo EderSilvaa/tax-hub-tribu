@@ -65,7 +65,7 @@ export default {
 				}
 			},
 			fontFamily: {
-				'open-ring': ['Open Sans', 'sans-serif'],
+				'open-ring': ['Open Ring', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
