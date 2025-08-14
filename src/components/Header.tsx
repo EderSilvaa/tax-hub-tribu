@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,10 +11,12 @@ import {
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   const navigation = [
-    { name: "Início", href: "#home" },
-    { name: "Contato", href: "#contact" },
+    { name: "Início", href: "/" },
+    { name: "Contato", href: isHomePage ? "#contact" : "/#contact" },
   ];
 
   const services = [
@@ -31,25 +34,35 @@ const Header = () => {
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <div className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center space-x-3">
               <img 
                 src="/lovable-uploads/ed3f1b85-3725-4891-962f-4c321c7121a3.png" 
                 alt="SILVA Tributário Logo" 
-                className="h-8 w-auto"
+                className="h-8 w-auto cursor-pointer"
               />
-            </div>
+            </Link>
           </div>
 
           {/* Minimal Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
-              >
-                {item.name}
-              </a>
+              item.href.startsWith('/') ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
+                >
+                  {item.name}
+                </a>
+              )
             ))}
             
             <DropdownMenu>
@@ -60,12 +73,12 @@ const Header = () => {
               <DropdownMenuContent className="w-64 bg-background border-border">
                 {services.map((service) => (
                   <DropdownMenuItem key={service.name} asChild>
-                    <a 
-                      href={service.href}
+                    <Link 
+                      to={service.href}
                       className="cursor-pointer text-muted-foreground hover:text-foreground"
                     >
                       {service.name}
-                    </a>
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -95,27 +108,38 @@ const Header = () => {
           <div className="md:hidden">
             <div className="px-4 pt-2 pb-4 space-y-2 bg-background border-t border-border/30">
               {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
+                item.href.startsWith('/') ? (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                )
               ))}
               
               <div className="px-2 py-2">
                 <div className="text-sm font-medium text-muted-foreground mb-2">Serviços:</div>
                 {services.map((service) => (
-                  <a
+                  <Link
                     key={service.name}
-                    href={service.href}
+                    to={service.href}
                     className="block px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {service.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
               
