@@ -6,32 +6,38 @@ const Services = () => {
     {
       title: "Recuperação de Tributos",
       description: "Identifico tributos pagos a maior pela sua empresa e trabalho para recuperar esses valores, transformando isso em economia real.",
-      features: ["Análise de recolhimentos", "Pedidos de restituição", "ICMS pago indevidamente", "PIS/COFINS recuperação"]
+      features: ["Análise de recolhimentos", "Pedidos de restituição", "ICMS pago indevidamente", "PIS/COFINS recuperação"],
+      href: "/servicos/recuperacao-tributos"
     },
     {
       title: "Isenções para Pequenas Empresas",
       description: "Analiso se sua empresa tem direito a isenções fiscais e benefícios tributários específicos para pequenos negócios.",
-      features: ["Simples Nacional", "MEI - Microempreendedor", "Isenções setoriais", "Benefícios regionais"]
+      features: ["Simples Nacional", "MEI - Microempreendedor", "Isenções setoriais", "Benefícios regionais"],
+      href: "/servicos/isencoes-pequenas-empresas"
     },
     {
       title: "Consultoria Preventiva",
       description: "Orientação para evitar problemas fiscais futuros e garantir que sua empresa esteja sempre em dia com as obrigações.",
-      features: ["Orientação fiscal", "Compliance básico", "Regularização", "Planejamento simples"]
+      features: ["Orientação fiscal", "Compliance básico", "Regularização", "Planejamento simples"],
+      href: "/servicos/consultoria-preventiva"
     },
     {
       title: "Defesa em Autuações",
       description: "Represento sua empresa em fiscalizações e autuações, buscando reduzir ou anular multas e penalidades aplicadas.",
-      features: ["Defesa administrativa", "Recursos", "Parcelamentos", "Negociação de débitos"]
+      features: ["Defesa administrativa", "Recursos", "Parcelamentos", "Negociação de débitos"],
+      href: "/servicos/defesa-autuacoes"
     },
     {
       title: "Imposto de Renda",
       description: "Assessoria completa para declaração de IR de pessoas físicas e pequenas empresas, maximizando restituições.",
-      features: ["Declaração de IR", "Restituição máxima", "Retificação", "Regularização CPF"]
+      features: ["Declaração de IR", "Restituição máxima", "Retificação", "Regularização CPF"],
+      href: "/servicos/imposto-renda"
     },
     {
       title: "Consultoria Especializada",
       description: "Atendimento focado em pequenas empresas que precisam de orientação tributária clara e objetiva.",
-      features: ["Análise personalizada", "Relatórios simples", "Orientação presencial", "Suporte contínuo"]
+      features: ["Análise personalizada", "Relatórios simples", "Orientação presencial", "Suporte contínuo"],
+      href: "/servicos/consultoria-especializada"
     }
   ];
 
@@ -78,6 +84,7 @@ const Services = () => {
                   <Button 
                     variant="outline" 
                     className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => window.location.href = service.href}
                   >
                     Saber Mais
                   </Button>

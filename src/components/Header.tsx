@@ -1,14 +1,28 @@
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigation = [
     { name: "Início", href: "#home" },
-    { name: "Serviços", href: "#services" },
     { name: "Contato", href: "#contact" },
+  ];
+
+  const services = [
+    { name: "Recuperação de Tributos", href: "/servicos/recuperacao-tributos" },
+    { name: "Isenções para Pequenas Empresas", href: "/servicos/isencoes-pequenas-empresas" },
+    { name: "Consultoria Preventiva", href: "/servicos/consultoria-preventiva" },
+    { name: "Defesa em Autuações", href: "/servicos/defesa-autuacoes" },
+    { name: "Imposto de Renda", href: "/servicos/imposto-renda" },
+    { name: "Consultoria Especializada", href: "/servicos/consultoria-especializada" },
   ];
 
   return (
@@ -27,7 +41,7 @@ const Header = () => {
           </div>
 
           {/* Minimal Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6 lg:space-x-8">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navigation.map((item) => (
               <a
                 key={item.name}
@@ -37,6 +51,25 @@ const Header = () => {
                 {item.name}
               </a>
             ))}
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light">
+                Serviços
+                <ChevronDown size={14} className="ml-1" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-64 bg-background border-border">
+                {services.map((service) => (
+                  <DropdownMenuItem key={service.name} asChild>
+                    <a 
+                      href={service.href}
+                      className="cursor-pointer text-muted-foreground hover:text-foreground"
+                    >
+                      {service.name}
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           {/* Minimal Desktop CTA Button */}
@@ -71,6 +104,21 @@ const Header = () => {
                   {item.name}
                 </a>
               ))}
+              
+              <div className="px-2 py-2">
+                <div className="text-sm font-medium text-muted-foreground mb-2">Serviços:</div>
+                {services.map((service) => (
+                  <a
+                    key={service.name}
+                    href={service.href}
+                    className="block px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {service.name}
+                  </a>
+                ))}
+              </div>
+              
               <div className="px-2 pt-2">
                 <Button size="sm" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 py-2 text-sm font-medium">
                   Agendar Consulta
