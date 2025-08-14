@@ -7,7 +7,6 @@ const Header = () => {
 
   const navigation = [
     { name: "Início", href: "#home" },
-    { name: "Sobre", href: "#about" },
     { name: "Serviços", href: "#services" },
     { name: "Contato", href: "#contact" },
   ];
@@ -16,11 +15,14 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
-          {/* Clean Logo */}
+          {/* Logo */}
           <div className="flex-shrink-0">
-            <div className="text-lg sm:text-xl font-light tracking-wide">
-              <span className="text-foreground">SILVA</span>
-              <span className="text-accent font-medium"> Tributário</span>
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/lovable-uploads/ed3f1b85-3725-4891-962f-4c321c7121a3.png" 
+                alt="SILVA Tributário Logo" 
+                className="h-8 w-auto"
+              />
             </div>
           </div>
 
