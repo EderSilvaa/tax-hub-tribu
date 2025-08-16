@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Blog = () => {
   // Placeholder blog posts - these would come from a CMS or database in a real app
@@ -14,7 +15,8 @@ const Blog = () => {
       date: "2024-03-15",
       author: "SILVA Tributário",
       category: "Legislação",
-      readTime: "5 min"
+      readTime: "5 min",
+      slug: "legislacao-tributaria-2024"
     },
     {
       id: 2,
@@ -23,7 +25,8 @@ const Blog = () => {
       date: "2024-03-10",
       author: "SILVA Tributário",
       category: "Recuperação",
-      readTime: "8 min"
+      readTime: "8 min",
+      slug: "recuperacao-tributos"
     },
     {
       id: 3,
@@ -32,7 +35,8 @@ const Blog = () => {
       date: "2024-03-05",
       author: "SILVA Tributário",
       category: "Planejamento",
-      readTime: "6 min"
+      readTime: "6 min",
+      slug: "planejamento-tributario"
     }
   ];
 
@@ -59,7 +63,8 @@ const Blog = () => {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {blogPosts.map((post) => (
-                <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <Link key={post.id} to={`/blog/${post.slug}`}>
+                  <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
                   <CardHeader>
                     <div className="flex items-center gap-2 mb-3">
                       <Badge variant="secondary" className="text-xs">
@@ -89,6 +94,7 @@ const Blog = () => {
                     </div>
                   </CardContent>
                 </Card>
+                </Link>
               ))}
             </div>
 
