@@ -16,6 +16,7 @@ const Header = () => {
 
   const navigation = [
     { name: "Início", href: "/" },
+    { name: "Blog", href: "/blog" },
     { name: "Contato", href: isHomePage ? "#contact" : "/#contact" },
   ];
 

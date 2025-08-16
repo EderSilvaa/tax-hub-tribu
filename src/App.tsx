@@ -11,6 +11,7 @@ import ConsultoriaPreventiva from "./pages/services/ConsultoriaPreventiva";
 import DefesaAutuacoes from "./pages/services/DefesaAutuacoes";
 import ImpostoRenda from "./pages/services/ImpostoRenda";
 import ConsultoriaEspecializada from "./pages/services/ConsultoriaEspecializada";
+import Blog from "./pages/Blog";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/servicos/recuperacao-tributos" element={<RecuperacaoTributos />} />
           <Route path="/servicos/isencoes-pequenas-empresas" element={<IsencoesPequenasEmpresas />} />
           <Route path="/servicos/consultoria-preventiva" element={<ConsultoriaPreventiva />} />
