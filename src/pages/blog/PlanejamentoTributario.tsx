@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, User, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import blogImage from "@/assets/blog-planejamento-tributario.jpg";
 
 const PlanejamentoTributario = () => {
   return (
@@ -44,8 +45,23 @@ const PlanejamentoTributario = () => {
               </div>
             </header>
 
+            {/* Featured Image */}
+            <div className="mb-8">
+              <img 
+                src={blogImage} 
+                alt="Planejamento Tributário" 
+                className="w-full h-64 object-cover rounded-lg shadow-lg"
+              />
+            </div>
+
             {/* Article Content */}
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
+                          [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-3xl [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:border-b-2 [&_h2]:border-primary [&_h2]:pb-2
+                          [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-3
+                          [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-4
+                          [&_ul]:text-muted-foreground [&_ul]:mb-4 [&_ol]:text-muted-foreground [&_ol]:mb-4
+                          [&_li]:mb-2 [&_li]:leading-normal
+                          [&_strong]:text-foreground [&_strong]:font-semibold">
               <p className="text-xl text-muted-foreground mb-8">
                 Estratégias legais para reduzir a carga tributária e otimizar os resultados da sua pequena empresa.
               </p>
