@@ -40,7 +40,7 @@ const RecuperacaoTributos = () => {
                 </div>
                 <div className="flex items-center gap-1">
                   <User size={16} />
-                  <span>SILVA Tributário</span>
+                  <span>TaxHub</span>
                 </div>
               </div>
             </header>
@@ -55,125 +55,59 @@ const RecuperacaoTributos = () => {
             </div>
 
             {/* Article Content */}
-            <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
-                          [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-3xl [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:border-b-2 [&_h2]:border-primary [&_h2]:pb-2
-                          [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-3
-                          [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-4
-                          [&_ul]:text-muted-foreground [&_ul]:mb-4 [&_ol]:text-muted-foreground [&_ol]:mb-4
-                          [&_li]:mb-2 [&_li]:leading-normal
-                          [&_strong]:text-foreground [&_strong]:font-semibold">
-              <p className="text-xl text-muted-foreground mb-8">
-                Guia completo sobre o processo de recuperação de tributos e os documentos necessários para reaver valores pagos indevidamente.
-              </p>
-
-              <h2>O que são Tributos Pagos Indevidamente?</h2>
-              <p>
-                Tributos pagos indevidamente são valores recolhidos ao Fisco de forma incorreta, 
-                seja por erro de cálculo, interpretação equivocada da legislação ou pagamento 
-                de tributo não devido. Todo contribuinte tem o direito de recuperar esses valores.
-              </p>
-
-              <h2>Principais Situações de Pagamento Indevido</h2>
-              <ul>
-                <li>Erro no cálculo de impostos</li>
-                <li>Aplicação incorreta de alíquotas</li>
-                <li>Pagamento em duplicidade</li>
-                <li>Recolhimento de tributo não devido</li>
-                <li>Excesso de recolhimento em guias</li>
-                <li>Pagamento após prazo de vencimento com juros incorretos</li>
-              </ul>
-
-              <h2>Documentos Necessários</h2>
-              <p>Para solicitar a recuperação de tributos, você precisará reunir:</p>
-              
-              <h3>Documentos Básicos</h3>
-              <ul>
-                <li>Comprovantes de pagamento dos tributos</li>
-                <li>Declarações fiscais do período</li>
-                <li>Documentos que comprovem o erro</li>
-                <li>Cálculo demonstrativo do valor a recuperar</li>
-              </ul>
-
-              <h3>Documentos Específicos por Tributo</h3>
-              <ul>
-                <li><strong>IRPJ/CSLL:</strong> Demonstrações contábeis, LALUR</li>
-                <li><strong>PIS/COFINS:</strong> Registros de vendas e compras</li>
-                <li><strong>ICMS:</strong> Livros fiscais, notas fiscais</li>
-                <li><strong>IPI:</strong> Controle de produção, classificação fiscal</li>
-              </ul>
-
-              <h2>Modalidades de Recuperação</h2>
-              
-              <h3>1. Compensação</h3>
-              <p>
-                A compensação permite utilizar créditos de tributos pagos indevidamente 
-                para quitar débitos de outros tributos federais.
-              </p>
-
-              <h3>2. Restituição</h3>
-              <p>
-                Quando não há débitos para compensar, o contribuinte pode solicitar 
-                a restituição em dinheiro dos valores pagos indevidamente.
-              </p>
-
-              <h3>3. Ressarcimento</h3>
-              <p>
-                Aplicável principalmente para PIS/COFINS, quando há repasse do ônus 
-                financeiro ao consumidor final.
-              </p>
-
-              <h2>Prazos Prescricionais</h2>
-              <p>
-                É importante observar os prazos para não perder o direito à recuperação:
-              </p>
-              <ul>
-                <li><strong>Tributos Federais:</strong> 5 anos</li>
-                <li><strong>Tributos Estaduais:</strong> 5 anos (pode variar por estado)</li>
-                <li><strong>Tributos Municipais:</strong> 5 anos (pode variar por município)</li>
-              </ul>
-
-              <h2>Processo de Recuperação</h2>
-              
-              <h3>Passo 1: Análise e Levantamento</h3>
-              <p>
-                Identifique os tributos pagos indevidamente através de análise 
-                detalhada dos recolhimentos e da legislação aplicável.
-              </p>
-
-              <h3>Passo 2: Cálculo dos Valores</h3>
-              <p>
-                Calcule o valor principal, juros e correção monetária dos 
-                tributos a serem recuperados.
-              </p>
-
-              <h3>Passo 3: Formalização do Pedido</h3>
-              <p>
-                Elabore e protocole o pedido administrativo junto ao órgão 
-                competente com toda a documentação necessária.
-              </p>
-
-              <h3>Passo 4: Acompanhamento</h3>
-              <p>
-                Acompanhe o andamento do processo e responda eventuais 
-                exigências do Fisco.
-              </p>
-
-              <h2>Conclusão</h2>
-              <p>
-                A recuperação de tributos pagos indevidamente é um direito do contribuinte 
-                e pode representar importantes recursos para o caixa da empresa. É fundamental 
-                contar com assessoria especializada para identificar oportunidades e conduzir 
-                o processo de forma eficiente.
-              </p>
-
-              <div className="bg-primary/5 rounded-lg p-6 mt-8">
-                <h3 className="font-semibold mb-2">Quer Recuperar Seus Tributos?</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Nossa equipe pode fazer uma análise gratuita dos seus recolhimentos e identificar oportunidades de recuperação.
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
+                            [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-3xl [&_h2]:mt-8 [&_h2]:mb-6 [&_h2]:border-b-2 [&_h2]:border-primary [&_h2]:pb-2
+                            [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-4
+                            [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-6 [&_p]:text-justify
+                            [&_strong]:text-foreground [&_strong]:font-semibold">
+                
+                <p className="text-xl text-muted-foreground mb-8 text-center">
+                  Descubra como recuperar valores pagos indevidamente ao fisco e os principais casos em que isso é possível.
                 </p>
-                <Link to="/contato">
-                  <Button>Solicite uma Análise</Button>
-                </Link>
+
+                <p>
+                  A recuperação de tributos representa uma das ferramentas mais eficazes de gestão fiscal disponível às empresas brasileiras, constituindo um mecanismo legítimo de correção de pagamentos realizados em desconformidade com a legislação tributária. Este processo, fundamentado em princípios constitucionais como o da vedação ao enriquecimento sem causa e o da legalidade estrita, permite que contribuintes revertam situações de oneração fiscal indevida, recuperando recursos que podem ser direcionados para atividades produtivas.
+                </p>
+
+                <p>
+                  O conceito de indébito tributário abrange uma gama diversificada de situações que transcendem o simples erro de cálculo. Frequentemente, contribuintes realizam recolhimentos baseados em interpretações conservadoras da legislação, pagamentos em duplicidade decorrentes de falhas sistêmicas, ou ainda aplicam entendimentos normativos posteriormente modificados pela jurisprudência ou por alterações legislativas. Essas circunstâncias criam um cenário propício para a identificação de oportunidades de recuperação que, quando adequadamente exploradas, podem resultar em significativo impacto positivo no fluxo de caixa empresarial.
+                </p>
+
+                <p>
+                  Entre os tributos que apresentam maior potencial de recuperação, destaca-se o ICMS em operações envolvendo energia elétrica e telecomunicações, onde interpretações divergentes sobre a base de cálculo têm gerado substanciais oportunidades de restituição. O PIS e a COFINS, especialmente no que se refere ao aproveitamento de créditos sobre insumos e a aplicação do regime não cumulativo, constituem outra fonte importante de recuperação. O Imposto sobre Produtos Industrializados (IPI) frequentemente apresenta casos de recuperação em situações de isenção ou imunidade não observadas pelo fisco, enquanto o Imposto de Renda Pessoa Jurídica e a Contribuição Social sobre o Lucro Líquido oferecem oportunidades principalmente relacionadas a deduções não aproveitadas adequadamente.
+                </p>
+
+                <p>
+                  O processo de recuperação tributária demanda metodologia rigorosa e conhecimento especializado. Inicia-se com uma análise minuciosa da situação fiscal do contribuinte, envolvendo o exame detalhado de demonstrações contábeis, declarações fiscais e documentos de arrecadação. Esta fase diagnóstica é crucial para identificar não apenas os valores efetivamente pagos em excesso, mas também para fundamentar tecnicamente o pedido de restituição. A elaboração de pareceres técnicos consistentes, amparados em jurisprudência consolidada e doutrina especializada, constitui elemento fundamental para o sucesso do pleito administrativo.
+                </p>
+
+                <p>
+                  A dimensão temporal assume papel crítico no processo de recuperação tributária. O prazo prescricional de cinco anos, contado da data do pagamento indevido, estabelece um limite temporal para o exercício do direito à restituição. Contudo, este prazo pode sofrer interrupções e suspensões em circunstâncias específicas, como durante a tramitação de processos administrativos ou judiciais. A observância rigorosa desses prazos é fundamental para preservar o direito à recuperação, tornando essencial o acompanhamento sistemático das movimentações fiscais da empresa.
+                </p>
+
+                <p>
+                  Os benefícios econômicos da recuperação tributária estendem-se muito além da simples devolução de valores pagos indevidamente. A melhoria imediata do fluxo de caixa proporciona maior flexibilidade financeira para investimentos em expansão, modernização tecnológica ou capital de giro. Adicionalmente, o processo de recuperação frequentemente revela oportunidades de otimização tributária prospectiva, permitindo que a empresa ajuste seus procedimentos fiscais para evitar futuros recolhimentos indevidos.
+                </p>
+
+                <p>
+                  A documentação adequada constitui o alicerce de qualquer processo de recuperação bem-sucedido. Guias de recolhimento, declarações fiscais, livros contábeis e fiscais, correspondências mantidas com órgãos fazendários e pareceres técnicos anteriores formam o conjunto probatório necessário para demonstrar a ocorrência do pagamento indevido. A organização sistemática dessa documentação não apenas facilita o processo de recuperação, mas também evidencia a boa-fé do contribuinte e a solidez técnica de sua argumentação.
+                </p>
+
+                <h2>Perspectivas e Considerações Estratégicas</h2>
+                <p>
+                  A recuperação de tributos transcende a mera correção de pagamentos indevidos, constituindo elemento estratégico da gestão tributária empresarial. Em um ambiente de constante evolução normativa e jurisprudencial, a identificação proativa de oportunidades de recuperação representa diferencial competitivo significativo. A colaboração com profissionais especializados não apenas maximiza as chances de sucesso nos pleitos de restituição, mas também contribui para o desenvolvimento de uma cultura fiscal mais eficiente e consciente dentro da organização empresarial.
+                </p>
+
+                <div className="bg-primary/5 rounded-lg p-6 mt-8">
+                  <h3 className="font-semibold mb-2">Quer Recuperar Seus Tributos?</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Nossa equipe pode fazer uma análise gratuita dos seus recolhimentos e identificar oportunidades de recuperação.
+                  </p>
+                  <Link to="/contato">
+                    <Button>Solicite uma Análise</Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

@@ -40,7 +40,7 @@ const PlanejamentoTributario = () => {
                 </div>
                 <div className="flex items-center gap-1">
                   <User size={16} />
-                  <span>SILVA Tributário</span>
+                  <span>TaxHub</span>
                 </div>
               </div>
             </header>
@@ -55,170 +55,63 @@ const PlanejamentoTributario = () => {
             </div>
 
             {/* Article Content */}
-            <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
-                          [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-3xl [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:border-b-2 [&_h2]:border-primary [&_h2]:pb-2
-                          [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-3
-                          [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-4
-                          [&_ul]:text-muted-foreground [&_ul]:mb-4 [&_ol]:text-muted-foreground [&_ol]:mb-4
-                          [&_li]:mb-2 [&_li]:leading-normal
-                          [&_strong]:text-foreground [&_strong]:font-semibold">
-              <p className="text-xl text-muted-foreground mb-8">
-                Estratégias legais para reduzir a carga tributária e otimizar os resultados da sua pequena empresa.
-              </p>
-
-              <h2>O que é Planejamento Tributário?</h2>
-              <p>
-                O planejamento tributário é um conjunto de práticas legais que visa reduzir 
-                a carga tributária de uma empresa, otimizando seus resultados financeiros. 
-                Para pequenas empresas, essa estratégia pode ser decisiva para a sustentabilidade 
-                e crescimento do negócio.
-              </p>
-
-              <h2>Benefícios do Planejamento Tributário</h2>
-              <ul>
-                <li>Redução legal da carga tributária</li>
-                <li>Melhoria do fluxo de caixa</li>
-                <li>Aumento da competitividade</li>
-                <li>Prevenção de riscos fiscais</li>
-                <li>Otimização dos resultados financeiros</li>
-                <li>Compliance fiscal</li>
-              </ul>
-
-              <h2>Regimes Tributários para Pequenas Empresas</h2>
-              
-              <h3>1. Simples Nacional</h3>
-              <p>
-                O regime mais vantajoso para a maioria das pequenas empresas:
-              </p>
-              <ul>
-                <li>Unifica até 8 tributos em uma única guia</li>
-                <li>Alíquotas progressivas de acordo com o faturamento</li>
-                <li>Menos obrigações acessórias</li>
-                <li>Limite de faturamento: R$ 4,8 milhões anuais</li>
-              </ul>
-
-              <h3>2. Lucro Presumido</h3>
-              <p>
-                Alternativa para empresas que não se enquadram no Simples:
-              </p>
-              <ul>
-                <li>Base de cálculo presumida</li>
-                <li>Pode ser vantajoso para empresas com alta margem</li>
-                <li>Menos complexidade que o Lucro Real</li>
-              </ul>
-
-              <h3>3. MEI (Microempreendedor Individual)</h3>
-              <p>
-                Para negócios muito pequenos:
-              </p>
-              <ul>
-                <li>Faturamento limitado a R$ 81.000/ano</li>
-                <li>Valor fixo mensal</li>
-                <li>Processo simplificado</li>
-              </ul>
-
-              <h2>Estratégias de Planejamento</h2>
-              
-              <h3>1. Escolha do Regime Tributário</h3>
-              <p>
-                Analise qual regime oferece menor carga tributária para seu perfil de negócio:
-              </p>
-              <ul>
-                <li>Compare as alíquotas efetivas</li>
-                <li>Considere as obrigações acessórias</li>
-                <li>Avalie o crescimento futuro</li>
-              </ul>
-
-              <h3>2. Gestão de Pró-labore e Distribuição de Lucros</h3>
-              <p>
-                Otimize a remuneração dos sócios:
-              </p>
-              <ul>
-                <li>Defina pró-labore adequado</li>
-                <li>Utilize distribuição de lucros (isenta de IR)</li>
-                <li>Considere os limites legais</li>
-              </ul>
-
-              <h3>3. Controle de Despesas Dedutíveis</h3>
-              <p>
-                Maximize as deduções permitidas:
-              </p>
-              <ul>
-                <li>Mantenha documentação organizada</li>
-                <li>Identifique todas as despesas dedutíveis</li>
-                <li>Planeje investimentos e compras</li>
-              </ul>
-
-              <h2>Planejamento por Setor</h2>
-              
-              <h3>Comércio</h3>
-              <ul>
-                <li>Análise da substituição tributária</li>
-                <li>Gestão do estoque para ICMS</li>
-                <li>Aproveitamento de créditos</li>
-              </ul>
-
-              <h3>Serviços</h3>
-              <ul>
-                <li>Análise do ISS municipal</li>
-                <li>Gestão de retenções na fonte</li>
-                <li>Planejamento de PIS/COFINS</li>
-              </ul>
-
-              <h3>Indústria</h3>
-              <ul>
-                <li>Benefícios fiscais regionais</li>
-                <li>Créditos de IPI</li>
-                <li>Incentivos à inovação</li>
-              </ul>
-
-              <h2>Cuidados e Compliance</h2>
-              
-              <h3>Limites Legais</h3>
-              <p>
-                Todo planejamento deve respeitar:
-              </p>
-              <ul>
-                <li>Legislação tributária vigente</li>
-                <li>Jurisprudência dos tribunais</li>
-                <li>Normas dos órgãos fiscalizadores</li>
-              </ul>
-
-              <h3>Documentação</h3>
-              <ul>
-                <li>Mantenha registros atualizados</li>
-                <li>Documente as estratégias adotadas</li>
-                <li>Preserve comprovantes por 5 anos</li>
-              </ul>
-
-              <h2>Quando Revisar o Planejamento</h2>
-              <p>
-                O planejamento tributário deve ser revisado:
-              </p>
-              <ul>
-                <li>Anualmente, antes do início do exercício</li>
-                <li>Quando há mudanças na legislação</li>
-                <li>Em caso de crescimento significativo</li>
-                <li>Ao mudar o mix de produtos/serviços</li>
-                <li>Em operações societárias</li>
-              </ul>
-
-              <h2>Conclusão</h2>
-              <p>
-                O planejamento tributário é essencial para a saúde financeira das pequenas empresas. 
-                Com as estratégias certas, é possível reduzir significativamente a carga tributária 
-                de forma legal e segura. Invista em assessoria especializada para maximizar os 
-                benefícios e evitar riscos.
-              </p>
-
-              <div className="bg-primary/5 rounded-lg p-6 mt-8">
-                <h3 className="font-semibold mb-2">Precisa de um Planejamento Tributário?</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Nossa equipe pode desenvolver estratégias personalizadas para reduzir a carga tributária da sua empresa.
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
+                            [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-3xl [&_h2]:mt-8 [&_h2]:mb-6 [&_h2]:border-b-2 [&_h2]:border-primary [&_h2]:pb-2
+                            [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-4
+                            [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-6 [&_p]:text-justify
+                            [&_strong]:text-foreground [&_strong]:font-semibold">
+                
+                <p className="text-xl text-muted-foreground mb-8 text-center">
+                  Estratégias eficazes para reduzir a carga tributária da sua empresa de forma legal e sustentável.
                 </p>
-                <Link to="/contato">
-                  <Button>Agende uma Consultoria</Button>
-                </Link>
+
+                <p>
+                  O planejamento tributário representa uma das mais importantes ferramentas de gestão empresarial disponível no cenário econômico brasileiro, constituindo elemento fundamental para a sustentabilidade e competitividade das organizações. Trata-se de um processo sistemático e contínuo de análise da legislação fiscal vigente, conjugado com o estudo detalhado das atividades empresariais, visando identificar alternativas legais que permitam a otimização da carga tributária. Esta prática, longe de constituir evasão fiscal, fundamenta-se no princípio constitucional da livre iniciativa e no direito de o contribuinte organizar seus negócios da forma mais eficiente possível.
+                </p>
+
+                <p>
+                  A complexidade do sistema tributário brasileiro, caracterizado por múltiplas esferas de tributação e constantes alterações legislativas, torna o planejamento tributário não apenas uma oportunidade de otimização fiscal, mas uma necessidade estratégica para a sobrevivência empresarial. A carga tributária elevada que incide sobre as atividades produtivas no país exige que gestores adotem abordagem proativa na gestão fiscal, transformando o cumprimento das obrigações tributárias em vantagem competitiva através da eficiência e conformidade.
+                </p>
+
+                <p>
+                  Os benefícios decorrentes de um planejamento tributário bem estruturado transcendem a simples redução de impostos, gerando impactos positivos em toda a cadeia de valor empresarial. A melhoria do fluxo de caixa resultante da otimização fiscal proporciona maior flexibilidade para investimentos em inovação, expansão e modernização tecnológica. Simultaneamente, a redução da carga tributária se traduz em maior competitividade no mercado, permitindo que empresas ofereçam preços mais atrativos ou ampliem suas margens de lucro sem comprometer sua posição competitiva.
+                </p>
+
+                <p>
+                  A escolha do regime tributário constitui decisão estratégica fundamental que influencia diretamente a efetividade do planejamento fiscal. O Simples Nacional, concebido para favorecer micro e pequenas empresas com faturamento anual até R$ 4,8 milhões, oferece alíquotas progressivas e significativa simplificação nas obrigações acessórias. Contudo, sua aplicabilidade deve ser cuidadosamente avaliada considerando as restrições de atividades e os custos trabalhistas que permanecem integrais.
+                </p>
+
+                <p>
+                  O Lucro Presumido apresenta-se como alternativa atrativa para empresas com margens de lucro superiores aos percentuais de presunção estabelecidos pela legislação. Este regime oferece previsibilidade tributária e simplificação contábil, sendo particularmente vantajoso para atividades com alta lucratividade. Por outro lado, o Lucro Real, embora mais complexo em termos de apuração e obrigações acessórias, permite o aproveitamento integral de despesas dedutíveis e prejuízos fiscais, sendo frequentemente mais vantajoso para empresas com estrutura de custos elevada ou resultados operacionais oscilantes.
+                </p>
+
+                <p>
+                  As estratégias de planejamento tributário devem ser desenvolvidas considerando as especificidades setoriais e as características particulares de cada negócio. No setor comercial, a otimização frequentemente concentra-se na gestão do ICMS e na análise comparativa entre diferentes regimes tributários, considerando a margem de lucro das mercadorias comercializadas. Empresas industriais beneficiam-se significativamente do aproveitamento de créditos de IPI, ICMS, PIS e COFINS, além da exploração de incentivos fiscais regionais e setoriais que podem resultar em substancial economia tributária.
+                </p>
+
+                <p>
+                  O setor de prestação de serviços apresenta características distintas que exigem abordagem especializada no planejamento tributário. A otimização do ISS, combinada com análise criteriosa da tributação incidente sobre a folha de pagamento, constitui elemento central para a eficiência fiscal neste segmento. A natureza específica de cada tipo de serviço prestado influencia diretamente as possibilidades de otimização, tornando essencial a análise individualizada de cada caso.
+                </p>
+
+                <p>
+                  A sustentabilidade de qualquer estratégia de planejamento tributário depende fundamentalmente da observância rigorosa aos limites legais e jurisprudenciais estabelecidos. O conceito de substância econômica das operações assume papel central na avaliação da legitimidade das estratégias adotadas, exigindo que toda operação tenha propósito negocial genuíno além da economia tributária. A documentação adequada de todas as operações e decisões empresariais constitui elemento probatório essencial para demonstrar a boa-fé e a regularidade dos procedimentos adotados.
+                </p>
+
+                <h2>Dinamismo e Adaptabilidade Estratégica</h2>
+                <p>
+                  O planejamento tributário eficaz caracteriza-se pela dinamicidade e capacidade de adaptação às constantes mudanças do ambiente normativo e econômico. A revisão periódica das estratégias implementadas, idealmente realizada ao menos anualmente ou sempre que ocorrerem alterações significativas no negócio ou na legislação, garante que a otimização fiscal permaneça alinhada com os objetivos empresariais e em conformidade com as exigências legais. Esta abordagem proativa na gestão tributária não apenas assegura economia fiscal sustentável, mas também contribui para o fortalecimento da cultura de compliance dentro da organização, promovendo maior segurança jurídica e reputacional para a empresa.
+                </p>
+
+                <div className="bg-primary/5 rounded-lg p-6 mt-8">
+                  <h3 className="font-semibold mb-2">Precisa de um Planejamento Tributário?</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Nossa equipe pode desenvolver estratégias personalizadas para reduzir a carga tributária da sua empresa.
+                  </p>
+                  <Link to="/contato">
+                    <Button>Agende uma Consultoria</Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

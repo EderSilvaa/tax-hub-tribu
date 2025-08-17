@@ -40,7 +40,7 @@ const LegislacaoTributaria2024 = () => {
                 </div>
                 <div className="flex items-center gap-1">
                   <User size={16} />
-                  <span>SILVA Tributário</span>
+                  <span>TaxHub</span>
                 </div>
               </div>
             </header>
@@ -55,84 +55,60 @@ const LegislacaoTributaria2024 = () => {
             </div>
 
             {/* Article Content */}
-            <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
-                          [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-3xl [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:border-b-2 [&_h2]:border-primary [&_h2]:pb-2
-                          [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-3
-                          [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-4
-                          [&_ul]:text-muted-foreground [&_ul]:mb-4 [&_ol]:text-muted-foreground [&_ol]:mb-4
-                          [&_li]:mb-2 [&_li]:leading-normal
-                          [&_strong]:text-foreground [&_strong]:font-semibold">
-              <p className="text-xl text-muted-foreground mb-8">
-                Entenda as principais alterações que impactam empresas e pessoas físicas neste ano e como se preparar para as mudanças.
-              </p>
-
-              <h2>Resumo das Principais Mudanças</h2>
-              <p>
-                O ano de 2024 trouxe importantes modificações na legislação tributária brasileira, 
-                afetando tanto pessoas físicas quanto jurídicas. Essas mudanças visam modernizar 
-                o sistema tributário e aumentar a arrecadação.
-              </p>
-
-              <h2>1. Alterações no Imposto de Renda</h2>
-              <p>
-                As principais mudanças no Imposto de Renda incluem:
-              </p>
-              <ul>
-                <li>Novo valor da faixa de isenção</li>
-                <li>Alterações nas deduções permitidas</li>
-                <li>Mudanças nos prazos de entrega da declaração</li>
-                <li>Novas obrigações para investimentos no exterior</li>
-              </ul>
-
-              <h2>2. Modificações Tributárias para Empresas</h2>
-              <p>
-                As empresas devem estar atentas às seguintes mudanças:
-              </p>
-              <ul>
-                <li>Novas regras para o Simples Nacional</li>
-                <li>Alterações no ICMS para e-commerce</li>
-                <li>Mudanças nas regras de tributação de lucros no exterior</li>
-                <li>Novas obrigações acessórias</li>
-              </ul>
-
-              <h2>3. Impactos do PIX na Tributação</h2>
-              <p>
-                O crescimento do PIX trouxe novas regras de controle e fiscalização:
-              </p>
-              <ul>
-                <li>Monitoramento de transações acima de determinados valores</li>
-                <li>Novas obrigações de prestação de informações</li>
-                <li>Impactos na tributação de pessoas físicas</li>
-              </ul>
-
-              <h2>4. Como Se Preparar</h2>
-              <p>
-                Para estar em conformidade com as novas regras:
-              </p>
-              <ol>
-                <li>Revise seus processos internos</li>
-                <li>Atualize seus sistemas de controle</li>
-                <li>Busque orientação profissional especializada</li>
-                <li>Mantenha-se atualizado com as mudanças</li>
-              </ol>
-
-              <h2>Conclusão</h2>
-              <p>
-                As mudanças na legislação tributária de 2024 exigem atenção especial de 
-                contribuintes e empresas. É fundamental buscar orientação profissional 
-                para garantir o cumprimento das novas obrigações e evitar problemas 
-                com a Receita Federal.
-              </p>
-
-              <div className="bg-primary/5 rounded-lg p-6 mt-8">
-                <h3 className="font-semibold mb-2">Precisa de Ajuda?</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Nossa equipe especializada pode ajudar sua empresa a se adequar às novas regras tributárias.
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="prose prose-lg prose-slate dark:prose-invert max-w-none 
+                            [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-3xl [&_h2]:mt-8 [&_h2]:mb-6 [&_h2]:border-b-2 [&_h2]:border-primary [&_h2]:pb-2
+                            [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-4
+                            [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_p]:mb-6 [&_p]:text-justify
+                            [&_strong]:text-foreground [&_strong]:font-semibold">
+                
+                <p className="text-xl text-muted-foreground mb-8 text-center">
+                  Entenda as principais alterações que impactam empresas e pessoas físicas neste ano e como se preparar para as mudanças.
                 </p>
-                <Link to="/contato">
-                  <Button>Entre em Contato</Button>
-                </Link>
+
+                <p>
+                  O cenário tributário brasileiro passou por transformações significativas em 2024, estabelecendo um marco na modernização do sistema fiscal nacional. As mudanças implementadas refletem a necessidade do governo de adequar a legislação tributária às novas realidades econômicas e tecnológicas, buscando simultaneamente aumentar a eficiência na arrecadação e promover maior transparência nas relações entre fisco e contribuintes.
+                </p>
+
+                <p>
+                  No âmbito do Imposto de Renda pessoa física, as alterações introduzidas representam uma reformulação estrutural que afeta diretamente milhões de brasileiros. A elevação da faixa de isenção constitui uma medida de impacto social relevante, proporcionando alívio fiscal para a classe média baixa. Paralelamente, as modificações nas regras de dedução exigem maior atenção dos contribuintes, especialmente no que se refere às despesas médicas e educacionais, que passaram por ajustes em seus limites e modalidades de comprovação.
+                </p>
+
+                <p>
+                  A extensão dos prazos para entrega da declaração anual, embora aparentemente benéfica, traz consigo a responsabilidade de maior rigor na fiscalização. O fisco implementou sistemas mais sofisticados de cruzamento de dados, tornando essencial que os contribuintes mantenham registros precisos e atualizados de suas movimentações financeiras. Ademais, as novas obrigações relacionadas a investimentos no exterior refletem a crescente internacionalização da economia brasileira e a necessidade de controle mais efetivo sobre os capitais nacionais aplicados em outros países.
+                </p>
+
+                <p>
+                  Para o segmento empresarial, as transformações assumem proporções ainda mais complexas. O Simples Nacional, regime que beneficia pequenas e médias empresas, passou por ajustes em suas alíquotas e critérios de enquadramento, exigindo reavaliação estratégica por parte dos empresários. Essas mudanças visam corrigir distorções identificadas ao longo dos anos e promover maior equidade entre os diferentes portes empresariais.
+                </p>
+
+                <p>
+                  A tributação do comércio eletrônico ganhou contornos mais definidos com as alterações no ICMS, estabelecendo regras mais claras para operações interestaduais e criando mecanismos de controle mais eficientes. Essa evolução normativa era esperada pelo setor, que vivenciava incertezas jurídicas que prejudicavam o planejamento empresarial e geravam conflitos entre os diferentes estados da federação.
+                </p>
+
+                <p>
+                  O fenômeno PIX revolucionou não apenas os meios de pagamento, mas também os mecanismos de controle fiscal. O monitoramento automatizado de transações acima de determinados valores representa um salto qualitativo na capacidade de fiscalização da Receita Federal. Essa inovação tecnológica permite identificar inconsistências patrimoniais com maior agilidade e precisão, tornando fundamental que contribuintes mantenham coerência entre suas declarações e movimentações financeiras efetivas.
+                </p>
+
+                <p>
+                  Diante desse panorama de transformações, a preparação adequada torna-se imperativa para todos os contribuintes. A revisão dos processos internos de controle fiscal não pode mais ser vista como uma opção, mas sim como uma necessidade estratégica. A atualização de sistemas de gestão deve contemplar as novas exigências legais, garantindo que informações sejam coletadas, organizadas e reportadas de acordo com os novos padrões estabelecidos.
+                </p>
+
+                <h2>Reflexões Finais</h2>
+                <p>
+                  As mudanças na legislação tributária de 2024 consolidam uma nova era nas relações entre fisco e contribuintes, caracterizada pela digitalização, transparência e eficiência. Embora representem desafios adaptativos iniciais, essas transformações prometem um sistema tributário mais justo e moderno. A busca por orientação profissional especializada deixa de ser um diferencial para se tornar uma necessidade, considerando a complexidade crescente das obrigações fiscais e as consequências cada vez mais severas do descumprimento das normas tributárias.
+                </p>
               </div>
+            </div>
+
+            <div className="bg-primary/5 rounded-lg p-6 mt-8 max-w-3xl mx-auto">
+              <h3 className="font-semibold mb-2">Precisa de Ajuda?</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Nossa equipe especializada pode ajudar sua empresa a se adequar às novas regras tributárias.
+              </p>
+              <Link to="/contato">
+                <Button>Entre em Contato</Button>
+              </Link>
             </div>
           </div>
         </article>
