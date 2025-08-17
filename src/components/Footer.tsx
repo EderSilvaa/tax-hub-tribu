@@ -8,8 +8,7 @@ const Footer = () => {
           {/* Clean Brand */}
           <div className="space-y-3 sm:space-y-4">
             <div className="text-xl sm:text-2xl font-light tracking-wide">
-              <span className="text-foreground">SILVA</span>
-              <span className="text-accent font-medium"> Tributário</span>
+              <span className="text-accent font-medium">TaxHub</span>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-light">
               Especialista em Direito Tributário com mais de 15 anos de experiência, 
@@ -63,7 +62,7 @@ const Footer = () => {
               <div className="flex items-center space-x-2 sm:space-x-3">
                 <Mail className="w-4 h-4 text-accent flex-shrink-0" />
                 <div className="text-muted-foreground text-xs sm:text-sm font-light">
-                  contato@silvatributario.com.br
+                  contato@taxhub.com.br
                 </div>
               </div>
             </div>
@@ -73,7 +72,7 @@ const Footer = () => {
         <div className="border-t border-border/30 mt-6 sm:mt-8 pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
             <div className="text-muted-foreground text-xs font-light">
-              © 2024 Silva Tributário. Todos os direitos reservados.
+              © 2024 TaxHub. Todos os direitos reservados.
             </div>
             <div className="flex space-x-4 sm:space-x-6 text-xs text-muted-foreground font-light">
               <a href="#" className="hover:text-accent transition-colors">

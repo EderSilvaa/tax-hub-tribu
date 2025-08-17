@@ -16,9 +16,7 @@ const Hero = () => {
         <div className="text-center space-y-8 sm:space-y-12">
           <div className="space-y-4 sm:space-y-6">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-open-ring font-light tracking-tight leading-none">
-              <span className="text-foreground font-normal">SILVA</span>
-              <br />
-              <span className="text-accent font-medium">Tributário</span>
+              <span className="text-accent font-medium">TaxHub</span>
             </h1>
             <div className="w-16 h-px bg-accent mx-auto"></div>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-light">
