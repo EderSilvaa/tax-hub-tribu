@@ -1,0 +1,35 @@
+<svg width="140" height="40" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo Symbol - Inspired by the interlocked diamond design -->
+  <g transform="translate(4, 8)">
+    <!-- Top-left orange segment -->
+    <path d="M0 6 C0 2, 2 0, 6 0 L12 0 C14 0, 16 2, 16 4 L16 10 C16 12, 14 14, 12 14 L6 14 C2 14, 0 10, 0 6 Z" 
+          fill="#B8860B" opacity="0.95"/>
+    
+    <!-- Bottom-right orange segment -->
+    <path d="M8 10 C8 8, 10 6, 12 6 L18 6 C22 6, 24 10, 24 14 L24 18 C24 22, 20 24, 16 24 L10 24 C8 24, 8 22, 8 20 Z" 
+          fill="#CD853F" opacity="0.9"/>
+    
+    <!-- Top-right dark segment -->
+    <path d="M12 0 C16 0, 20 0, 24 4 L24 10 C24 12, 22 14, 20 14 L14 14 C12 14, 12 12, 12 10 Z" 
+          fill="#2F3437" opacity="0.95"/>
+    
+    <!-- Bottom-left dark segment -->
+    <path d="M0 14 C2 14, 4 14, 6 14 L12 14 C12 16, 12 18, 10 20 L4 20 C0 20, 0 16, 0 14 Z" 
+          fill="#4A5568" opacity="0.9"/>
+    
+    <!-- Center intersection highlight -->
+    <circle cx="12" cy="12" r="2" fill="hsl(25, 35%, 40%)" opacity="0.7"/>
+  </g>
+  
+  <!-- Text -->
+  <g transform="translate(52, 0)">
+    <text x="0" y="16" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" 
+          font-size="15" font-weight="700" fill="currentColor" letter-spacing="-0.02em">
+      TaxHub
+    </text>
+    <text x="0" y="28" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" 
+          font-size="9" font-weight="500" fill="currentColor" opacity="0.75" letter-spacing="0.05em">
+      TRIBU
+    </text>
+  </g>
+</svg>

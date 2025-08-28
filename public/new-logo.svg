@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <style>
+      .logo-bg { fill: #000000; }
+      .logo-shape-1 { fill: #C8956D; }
+      .logo-shape-2 { fill: #5A6B7D; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect class="logo-bg" width="400" height="400"/>
+  
+  <!-- Interlocked rounded shapes -->
+  <g transform="translate(200,200)">
+    <!-- First rounded shape (bronze/tan) -->
+    <path class="logo-shape-1" d="M-50,-80 Q-80,-80 -80,-50 L-80,50 Q-80,80 -50,80 L50,80 Q80,80 80,50 L80,-50 Q80,-80 50,-80 Z" transform="rotate(45)" opacity="0.9"/>
+    
+    <!-- Second rounded shape (blue-gray) interlocked -->
+    <path class="logo-shape-2" d="M-50,-80 Q-80,-80 -80,-50 L-80,50 Q-80,80 -50,80 L50,80 Q80,80 80,50 L80,-50 Q80,-80 50,-80 Z" transform="rotate(-45)" opacity="0.9"/>
+    
+    <!-- Inner highlight for depth -->
+    <circle cx="0" cy="0" r="25" fill="#000000" opacity="0.3"/>
+  </g>
+</svg>

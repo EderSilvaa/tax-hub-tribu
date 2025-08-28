@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -30,16 +31,16 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/30">
+    <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30 animate-slide-down">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center hover-lift transition-transform duration-300">
               <img 
-                src="/lovable-uploads/ed3f1b85-3725-4891-962f-4c321c7121a3.png" 
-                alt="SILVA Tributário Logo" 
-                className="h-8 w-auto cursor-pointer"
+                src="/logo taxhub.png" 
+                alt="TaxHub Tribu Logo" 
+                className="h-10 w-auto cursor-pointer"
               />
             </Link>
           </div>
@@ -86,18 +87,20 @@ const Header = () => {
             </DropdownMenu>
           </nav>
 
-          {/* Minimal Desktop CTA Button */}
-          <div className="hidden md:block">
-            <Button size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-colors duration-200 px-4 py-2 text-sm font-medium">
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-3">
+            <ThemeToggle />
+            <Button variant="gradient" size="sm" className="px-4 py-2 text-sm font-medium">
               Agendar Consulta
             </Button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile Actions */}
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-muted-foreground hover:text-foreground transition-colors p-1"
+              className="text-muted-foreground hover:text-foreground transition-colors p-1 hover-lift focus-ring"
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -145,7 +148,7 @@ const Header = () => {
               </div>
               
               <div className="px-2 pt-2">
-                <Button size="sm" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 py-2 text-sm font-medium">
+                <Button variant="gradient" size="sm" className="w-full py-2 text-sm font-medium">
                   Agendar Consulta
                 </Button>
               </div>

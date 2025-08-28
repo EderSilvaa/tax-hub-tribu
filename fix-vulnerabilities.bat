@@ -1,0 +1,23 @@
+@echo off
+echo Corrigindo vulnerabilidades de segurança...
+
+echo Limpando cache do npm...
+npm cache clean --force
+
+echo Removendo node_modules...
+rmdir /s /q node_modules
+
+echo Removendo package-lock.json...
+del package-lock.json
+
+echo Instalando dependências atualizadas...
+npm install
+
+echo Executando audit fix...
+npm audit fix
+
+echo Verificando vulnerabilidades restantes...
+npm audit
+
+echo Concluído!
+pause
