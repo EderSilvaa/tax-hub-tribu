@@ -28,17 +28,17 @@ const Hero = () => {
               <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent-subtle mx-auto rounded-full" />
             </div>
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto font-normal">
-              Especializado em identificar tributos pagos a maior e transformar isso em 
-              <span className="text-accent font-medium"> economia real</span> para nossos clientes.
+              Hub de tecnologias tributárias com 
+              <span className="text-accent font-medium"> softwares inovadores</span> e acompanhamento jurídico-contábil completo.
             </p>
           </div>
             
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-md mx-auto animate-slide-up">
             <Button variant="gradient" size="xl" className="px-8 py-4 font-semibold shadow-glow">
-              Agendar Consulta
+              Testar Softwares
             </Button>
             <Button variant="glass" size="xl" className="px-8 py-4 font-semibold">
-              Nossos Serviços
+              Nossas Soluções
             </Button>
           </div>
             
@@ -47,19 +47,19 @@ const Hero = () => {
               <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-accent to-accent-subtle bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 50+
               </div>
-              <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">Casos Resolvidos</div>
+              <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">Clientes Ativos</div>
             </div>
             <div className="text-center group">
               <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-accent to-accent-subtle bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 100%
               </div>
-              <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">Dedicação</div>
+              <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">Automação</div>
             </div>
             <div className="text-center group">
               <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-accent to-accent-subtle bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 24h
               </div>
-              <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">Resposta</div>
+              <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">Suporte</div>
             </div>
           </div>
         </div>

@@ -18,12 +18,12 @@ const Footer = () => {
                 </span>
               </div>
               <Badge variant="gradient" size="sm">
-                Direito Tributário
+                Hub de Tecnologia Tributária
               </Badge>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Especialista em Direito Tributário com mais de 15 anos de experiência, 
-              oferecendo soluções eficientes e personalizadas para empresas modernas.
+              Startup de tecnologia tributária que oferece softwares inovadores e 
+              acompanhamento jurídico-contábil especializado para empresas modernas.
             </p>
           </div>
 
@@ -37,7 +37,7 @@ const Footer = () => {
               {[
                 { name: "Início", href: "#home" },
                 { name: "Sobre", href: "#about" },
-                { name: "Serviços", href: "#services" },
+                { name: "Softwares", href: "#services" },
                 { name: "Contato", href: "#contact" },
               ].map((link) => (
                 <li key={link.name}>
@@ -63,8 +63,8 @@ const Footer = () => {
                 <div className="flex items-start space-x-3">
                   <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <div className="text-muted-foreground text-sm">
-                    <div className="font-medium">Av. Paulista, 1000 - 15º Andar</div>
-                    <div>Bela Vista, São Paulo - SP</div>
+                    <div className="font-medium">Escritório Virtual</div>
+                    <div>Atendimento 100% Digital</div>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@ const Footer = () => {
               <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-300">
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                 <div className="text-muted-foreground text-sm font-medium">
-                  (11) 3456-7890
+                  (91) 99999-9999
                 </div>
               </div>
               
@@ -91,7 +91,7 @@ const Footer = () => {
             <div className="text-muted-foreground text-sm flex items-center">
               © 2024 TaxHub. Todos os direitos reservados.
               <Badge variant="glass" size="sm" className="ml-3">
-                OAB/SP
+                Startup
               </Badge>
             </div>
             <div className="flex space-x-6 text-sm text-muted-foreground">
