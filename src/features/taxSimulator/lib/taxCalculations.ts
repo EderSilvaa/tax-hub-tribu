@@ -208,26 +208,35 @@ export function calculateLucroPresumido(data: CompanyData): TaxCalculationResult
     aliquotaEfetiva
   };
 
+  // Vantagens conforme PDF
   const vantagens = [
-    'Margem de lucro presumida fixa',
-    'Menor complexidade que Lucro Real',
-    'Previsibilidade tributária',
-    'Adequado para empresas com boa margem',
-    'Permite planejamento fiscal'
+    'Simplicidade na apuração dos tributos',
+    'Margem de lucro presumida fixa por atividade',
+    'Previsibilidade da carga tributária',
+    'Menor número de obrigações acessórias',
+    'Adequado para empresas com margem igual ou superior à presumida',
+    'Facilidade no planejamento tributário',
+    'Menores custos de compliance'
   ];
 
+  // Desvantagens conforme PDF
   const desvantagens = [
-    'Tributação independe do lucro real',
-    'Margem presumida pode ser alta',
-    'PIS/COFINS cumulativo (sem créditos)',
-    'Não permite compensação de prejuízos'
+    'Tributação independe do lucro efetivo da empresa',
+    'Margem presumida pode ser superior ao lucro real',
+    'PIS/COFINS no regime cumulativo (sem direito a créditos)',
+    'Não permite compensação de prejuízos fiscais',
+    'Base de cálculo fixa mesmo em caso de prejuízo',
+    'Limitações para dedução de despesas'
   ];
 
+  // Limitações conforme PDF
   const limitacoes = [
-    'Faturamento máximo: R$ 78.000.000/ano',
-    'Margem presumida fixa por atividade',
-    'Obrigatório para algumas atividades',
-    'Não permite redução da base de cálculo'
+    'Faturamento máximo: R$ 78 milhões/ano',
+    'Margem de lucro presumida fixa conforme atividade',
+    'Vedado para algumas atividades específicas',
+    'Não permite redução da base de cálculo IRPJ/CSLL',
+    'PIS/COFINS no regime cumulativo (alíquotas menores)',
+    'Obrigatório para determinadas atividades (ex: factoring)'
   ];
 
   // Score baseado na margem da atividade vs lucro real
@@ -254,44 +263,94 @@ export function calculateLucroPresumido(data: CompanyData): TaxCalculationResult
   };
 }
 
+// ==================== HELPER FUNCTIONS ====================
+
+/**
+ * Estimar margem de lucro por atividade conforme médias do mercado
+ */
+function getMargemEstimadaPorAtividade(atividade: ActivityType): number {
+  switch (atividade) {
+    case ActivityType.COMERCIO_VAREJO:
+      return 0.05; // 5% - margem típica do varejo
+    case ActivityType.COMERCIO_ATACADO:
+      return 0.03; // 3% - margem típica do atacado
+    case ActivityType.INDUSTRIA_GERAL:
+      return 0.08; // 8% - margem típica da indústria
+    case ActivityType.SERVICOS_GERAIS:
+      return 0.15; // 15% - margem típica de serviços
+    case ActivityType.TECNOLOGIA:
+      return 0.20; // 20% - margem típica de tecnologia
+    case ActivityType.CONSULTORIA:
+      return 0.25; // 25% - margem típica de consultoria
+    case ActivityType.SAUDE:
+      return 0.18; // 18% - margem típica da saúde
+    case ActivityType.EDUCACAO:
+      return 0.12; // 12% - margem típica da educação
+    case ActivityType.FINANCEIRO:
+      return 0.15; // 15% - margem típica do financeiro
+    default:
+      return 0.10; // 10% - margem padrão conservadora
+  }
+}
+
 // ==================== LUCRO REAL CALCULATION ====================
 
 export function calculateLucroReal(data: CompanyData): TaxCalculationResult {
   const regime = TaxRegime.LUCRO_REAL;
 
-  // Lucro Real sempre é elegível (pode ser obrigatório)
+  // Verificar elegibilidade - Lucro Real é sempre elegível (pode ser obrigatório)
   const elegivel = true;
+  const isObrigatorio = data.faturamentoAnual > 78000000; // Obrigatório acima de R$ 78 milhões
 
-  // Para cálculo simplificado, assumir margem de lucro padrão se não informada
-  const lucroLiquido = data.lucroLiquido || (data.faturamentoAnual * 0.10); // 10% default
+  // Calcular lucro real - se não informado, estimar com base na atividade
+  let lucroLiquido = data.lucroLiquido;
 
-  // Calcular IRPJ
-  const irpjBasico = lucroLiquido * LUCRO_REAL_RATES.IRPJ.aliquotaNormal;
-  const lucroMensalMedio = lucroLiquido / 12;
-  const irpjAdicional = calculateIRPJAdditional(lucroMensalMedio, irpjBasico / 12) * 12;
+  if (!lucroLiquido) {
+    // Estimativas conservadoras por tipo de atividade
+    const margemEstimada = getMargemEstimadaPorAtividade(data.atividade);
+    lucroLiquido = data.faturamentoAnual * margemEstimada;
+  }
+
+  // Calcular IRPJ conforme PDF
+  const irpjBasico = lucroLiquido * LUCRO_REAL_RATES.IRPJ.aliquotaNormal; // 15%
+
+  // Adicional de 10% sobre parcela que exceder R$ 240.000/ano (R$ 20.000/mês)
+  const lucroAnualExcedente = Math.max(0, lucroLiquido - LUCRO_REAL_RATES.IRPJ.limiteAnual);
+  const irpjAdicional = lucroAnualExcedente * LUCRO_REAL_RATES.IRPJ.adicional; // 10%
   const irpjTotal = irpjBasico + irpjAdicional;
 
-  // Calcular CSLL
+  // Calcular CSLL conforme PDF
   const isFinanceira = data.atividade === ActivityType.FINANCEIRO;
   const aliquotaCSLL = isFinanceira ?
-    LUCRO_REAL_RATES.CSLL.aliquotaFinanceira :
-    LUCRO_REAL_RATES.CSLL.aliquotaNormal;
+    LUCRO_REAL_RATES.CSLL.aliquotaFinanceira : // 20% para financeiras
+    LUCRO_REAL_RATES.CSLL.aliquotaNormal;      // 9% demais atividades
   const csll = lucroLiquido * aliquotaCSLL;
 
-  // PIS/COFINS não cumulativo (permite créditos)
-  const pis = data.faturamentoAnual * LUCRO_REAL_RATES.PIS.naoCumulativo;
-  const cofins = data.faturamentoAnual * LUCRO_REAL_RATES.COFINS.naoCumulativo;
+  // PIS/COFINS não cumulativo (permite créditos) conforme PDF
+  const pisAliquota = LUCRO_REAL_RATES.PIS.naoCumulativo;      // 1,65%
+  const cofinsAliquota = LUCRO_REAL_RATES.COFINS.naoCumulativo; // 7,6%
 
-  // ICMS e ISS (estimativa)
+  // Aplicar possíveis reduções por créditos (estimativa conservadora)
+  const creditosPISCOFINS = data.setor === BusinessSector.INDUSTRIA ? 0.3 : 0.15; // 30% indústria, 15% outros
+
+  const pisBase = data.faturamentoAnual * pisAliquota;
+  const cofinsBase = data.faturamentoAnual * cofinsAliquota;
+
+  const pis = pisBase * (1 - creditosPISCOFINS);
+  const cofins = cofinsBase * (1 - creditosPISCOFINS);
+
+  // ICMS e ISS conforme PDF (estimativas por setor)
   let icms = 0;
   let iss = 0;
 
-  if (data.setor === BusinessSector.COMERCIO || data.setor === BusinessSector.INDUSTRIA) {
-    icms = data.faturamentoAnual * 0.18;
+  if (data.setor === BusinessSector.COMERCIO) {
+    icms = data.faturamentoAnual * 0.18; // 18% média comércio
+  } else if (data.setor === BusinessSector.INDUSTRIA) {
+    icms = data.faturamentoAnual * 0.12; // 12% média indústria
   }
 
   if ([BusinessSector.SERVICOS, BusinessSector.SERVICOS_ANEXO_IV, BusinessSector.SERVICOS_ANEXO_V].includes(data.setor)) {
-    iss = data.faturamentoAnual * 0.05;
+    iss = data.faturamentoAnual * 0.035; // 3,5% média municipal
   }
 
   const total = irpjTotal + csll + pis + cofins + icms + iss;
@@ -308,28 +367,35 @@ export function calculateLucroReal(data: CompanyData): TaxCalculationResult {
     aliquotaEfetiva
   };
 
+  // Vantagens conforme PDF
   const vantagens = [
-    'Tributação sobre lucro real',
-    'Permite compensação de prejuízos',
-    'PIS/COFINS não cumulativo (com créditos)',
-    'Dedução completa de despesas',
-    'Flexibilidade fiscal',
-    'Adequado para empresas com baixa margem'
+    'Tributação sobre o lucro efetivamente apurado',
+    'Permite compensação de prejuízos fiscais (limitada a 30%)',
+    'PIS/COFINS não cumulativo com direito a créditos',
+    'Dedução integral de despesas operacionais necessárias',
+    'Flexibilidade para planejamento tributário',
+    'Ideal para empresas com margem de lucro baixa',
+    'Possibilidade de diferimento de tributos'
   ];
 
+  // Desvantagens conforme PDF
   const desvantagens = [
-    'Maior complexidade operacional',
-    'Mais obrigações acessórias',
-    'Controle rigoroso necessário',
-    'Custos de compliance altos',
-    'Variabilidade tributária'
+    'Maior complexidade na apuração e controle',
+    'Múltiplas obrigações acessórias (ECF, ECD, etc.)',
+    'Necessidade de controle rigoroso de receitas e despesas',
+    'Custos mais elevados de compliance contábil',
+    'Variabilidade na carga tributária conforme resultado',
+    'Escrituração contábil obrigatória (LALUR)'
   ];
 
+  // Limitações conforme PDF
   const limitacoes = [
-    'Obrigatório para faturamento > R$ 78 milhões/ano',
-    'Controle detalhado de receitas e despesas',
-    'Apuração mensal ou trimestral',
-    'Escrituração contábil complexa'
+    'Obrigatório para faturamento anual > R$ 78 milhões',
+    'Obrigatório para bancos e instituições financeiras',
+    'Controle detalhado de todas as receitas e despesas',
+    'Apuração trimestral obrigatória (ou anual com estimativas mensais)',
+    'Escrituração do LALUR (Livro de Apuração do Lucro Real)',
+    'Compensação de prejuízos limitada a 30% do lucro real'
   ];
 
   // Score baseado na margem de lucro

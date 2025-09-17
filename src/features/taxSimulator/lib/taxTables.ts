@@ -482,37 +482,50 @@ export const LUCRO_PRESUMIDO_RATES: LucroPresumidoRates[] = [
 // ==================== LUCRO REAL 2024 ====================
 
 export const LUCRO_REAL_RATES = {
-  // Alíquotas básicas
+  // Alíquotas conforme PDF oficial - Lucro Real
   IRPJ: {
-    aliquotaNormal: 0.15,     // 15%
-    adicional: 0.10,          // 10% sobre valor acima de R$ 20.000/mês
-    limiteMensal: 20000       // R$ 20.000/mês
+    aliquotaNormal: 0.15,     // 15% sobre lucro real
+    adicional: 0.10,          // 10% sobre parcela que exceder R$ 20.000/mês (R$ 240.000/ano)
+    limiteMensal: 20000,      // R$ 20.000/mês
+    limiteAnual: 240000       // R$ 240.000/ano
   },
 
   CSLL: {
-    aliquotaNormal: 0.09,     // 9%
-    aliquotaFinanceira: 0.20  // 20% para atividades financeiras
+    aliquotaNormal: 0.09,     // 9% sobre lucro real
+    aliquotaFinanceira: 0.20, // 20% para instituições financeiras
+    aliquotaSeguros: 0.15     // 15% para seguradoras
   },
 
   PIS: {
-    cumulativo: 0.0065,       // 0,65% (cumulativo)
-    naoCumulativo: 0.0165,    // 1,65% (não cumulativo - regra geral)
-    aliquotaZero: 0.0         // 0% para alguns produtos
+    cumulativo: 0.0065,       // 0,65% (outros regimes)
+    naoCumulativo: 0.0165,    // 1,65% (Lucro Real - não cumulativo)
+    aliquotaZero: 0.0         // 0% para produtos da cesta básica
   },
 
   COFINS: {
-    cumulativo: 0.03,         // 3% (cumulativo)
-    naoCumulativo: 0.076,     // 7,6% (não cumulativo - regra geral)
-    aliquotaZero: 0.0         // 0% para alguns produtos
+    cumulativo: 0.03,         // 3% (outros regimes)
+    naoCumulativo: 0.076,     // 7,6% (Lucro Real - não cumulativo)
+    aliquotaZero: 0.0         // 0% para produtos da cesta básica
   },
 
-  // Observações importantes
+  // Características conforme PDF
+  CARACTERISTICAS: {
+    baseCalculo: "Lucro líquido do período ajustado",
+    apuracao: "Trimestral ou anual (opção por estimativa mensal)",
+    escrituracao: "LALUR obrigatório",
+    compensacaoPrejuizos: "Limitada a 30% do lucro real",
+    deducoes: "Todas as despesas necessárias à atividade",
+    creditos: "PIS/COFINS permite aproveitamento de créditos"
+  },
+
+  // Observações importantes conforme PDF
   observacoes: [
-    'Tributação sobre o lucro líquido real',
-    'Permite compensação de prejuízos fiscais',
-    'PIS/COFINS não cumulativo permite créditos',
+    'Tributação sobre o lucro líquido real apurado',
+    'Permite compensação de prejuízos fiscais (limitada)',
+    'PIS/COFINS não cumulativo com direito a créditos',
     'Obrigatório para faturamento acima de R$ 78 milhões/ano',
-    'Permite dedução de despesas operacionais'
+    'Permite dedução integral de despesas operacionais',
+    'Mais complexo mas pode ser mais vantajoso para empresas com baixa margem'
   ]
 } as const;
 
