@@ -147,7 +147,11 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
       } else if (currentStep === 1) {
         step2Schema.parse(stepData);
       } else if (currentStep === 2) {
-        step3Schema.parse(stepData);
+        // Step 3 é opcional, filtrar undefined/null values
+        const cleanStepData = Object.fromEntries(
+          Object.entries(stepData).filter(([_, value]) => value !== undefined && value !== null && value !== '')
+        );
+        step3Schema.parse(cleanStepData);
       }
       return true;
     } catch (error) {
@@ -157,6 +161,7 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
 
   const nextStep = async () => {
     const isStepValid = await validateCurrentStep();
+
     if (isStepValid) {
       if (!completedSteps.includes(currentStep)) {
         setCompletedSteps([...completedSteps, currentStep]);
@@ -483,14 +488,14 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                     Estágio da Empresa (opcional)
                   </Label>
                   <Select
-                    value={watchedValues.startupStage || ''}
-                    onValueChange={(value) => setValue('startupStage', value as StartupStage)}
+                    value={watchedValues.startupStage || 'none'}
+                    onValueChange={(value) => setValue('startupStage', value === 'none' ? undefined : value as StartupStage)}
                   >
                     <SelectTrigger className="focus-ring">
                       <SelectValue placeholder="Selecione o estágio (opcional)" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Não se aplica</SelectItem>
+                      <SelectItem value="none">Não se aplica</SelectItem>
                       {Object.entries(STARTUP_STAGES).map(([key, info]) => (
                         <SelectItem key={key} value={key}>
                           <div className="flex items-center gap-2">

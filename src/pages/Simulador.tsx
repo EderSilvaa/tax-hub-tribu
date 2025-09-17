@@ -18,7 +18,7 @@ import { Calculator, TrendingUp, Shield, Zap } from "lucide-react";
 import TaxSimulator from "@/features/taxSimulator/components/TaxSimulator";
 
 const Simulador = () => {
-  const [showSimulator, setShowSimulator] = useState(false);
+  const [showSimulator, setShowSimulator] = useState(true); // Start directly in simulator
 
   const handleStartSimulation = () => {
     setShowSimulator(true);
