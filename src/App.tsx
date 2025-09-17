@@ -17,6 +17,7 @@ import LegislacaoTributaria2024 from "./pages/blog/LegislacaoTributaria2024";
 import RecuperacaoTributosBlog from "./pages/blog/RecuperacaoTributos";
 import PlanejamentoTributario from "./pages/blog/PlanejamentoTributario";
 import SobreNos from "./pages/SobreNos";
+import Simulador from "./pages/Simulador";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/simulador" element={<Simulador />} />
           <Route path="/sobre-nos" element={<SobreNos />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/legislacao-tributaria-2024" element={<LegislacaoTributaria2024 />} />

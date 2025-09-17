@@ -17,6 +17,7 @@ const Header = () => {
 
   const navigation = [
     { name: "Início", href: "/" },
+    { name: "Simulador", href: "/simulador" },
     { name: "Sobre Nós", href: "/sobre-nos" },
     { name: "Blog", href: "/blog" },
   ];
@@ -37,9 +38,9 @@ const Header = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center hover-lift transition-transform duration-300">
-              <img 
-                src="/logo taxhub.png" 
-                alt="TaxHub Tribu Logo" 
+              <img
+                src="/logo taxhub.png"
+                alt="TaxHub Tribu Logo"
                 className="h-10 w-auto cursor-pointer"
               />
             </Link>
@@ -66,7 +67,7 @@ const Header = () => {
                 </a>
               )
             ))}
-            
+
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light">
                 Serviços
@@ -75,7 +76,7 @@ const Header = () => {
               <DropdownMenuContent className="w-64 bg-background border-border">
                 {services.map((service) => (
                   <DropdownMenuItem key={service.name} asChild>
-                    <Link 
+                    <Link
                       to={service.href}
                       className="cursor-pointer text-muted-foreground hover:text-foreground"
                     >
@@ -132,7 +133,7 @@ const Header = () => {
                   </a>
                 )
               ))}
-              
+
               <div className="px-2 py-2">
                 <div className="text-sm font-medium text-muted-foreground mb-2">Serviços:</div>
                 {services.map((service) => (
@@ -146,7 +147,7 @@ const Header = () => {
                   </Link>
                 ))}
               </div>
-              
+
               <div className="px-2 pt-2">
                 <Button variant="gradient" size="sm" className="w-full py-2 text-sm font-medium">
                   Agendar Consulta
