@@ -34,10 +34,20 @@ const Hero = () => {
           </div>
             
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-md mx-auto animate-slide-up">
-            <Button variant="gradient" size="xl" className="px-8 py-4 font-semibold shadow-glow">
-              Testar Softwares
+            <Button
+              variant="gradient"
+              size="xl"
+              className="px-8 py-4 font-semibold shadow-glow"
+              onClick={() => window.location.href = '/simulador'}
+            >
+              🚀 Simular Tributos
             </Button>
-            <Button variant="glass" size="xl" className="px-8 py-4 font-semibold">
+            <Button
+              variant="glass"
+              size="xl"
+              className="px-8 py-4 font-semibold"
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               Nossas Soluções
             </Button>
           </div>

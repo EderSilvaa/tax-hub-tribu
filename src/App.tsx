@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import TaxIA from "./pages/TaxIA";
 import RecuperacaoTributosService from "./pages/services/RecuperacaoTributos";
 import IsencoesPequenasEmpresas from "./pages/services/IsencoesPequenasEmpresas";
 import ConsultoriaPreventiva from "./pages/services/ConsultoriaPreventiva";
@@ -36,6 +37,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/simulador" element={<Simulador />} />
+          <Route path="/taxia" element={<TaxIA />} />
           <Route path="/sobre-nos" element={<SobreNos />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/legislacao-tributaria-2024" element={<LegislacaoTributaria2024 />} />

@@ -18,6 +18,7 @@ const Header = () => {
   const navigation = [
     { name: "Início", href: "/" },
     { name: "Simulador", href: "/simulador" },
+    { name: "TaxIA", href: "/taxia" },
     { name: "Sobre Nós", href: "/sobre-nos" },
     { name: "Blog", href: "/blog" },
   ];

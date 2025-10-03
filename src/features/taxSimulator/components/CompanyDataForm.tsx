@@ -23,6 +23,18 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   ChevronLeft,
   ChevronRight,
   Building2,
@@ -30,7 +42,8 @@ import {
   Users,
   Calculator,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  HelpCircle
 } from "lucide-react";
 
 import {
@@ -46,6 +59,11 @@ import {
   step2Schema,
   step3Schema
 } from '@/features/taxSimulator/lib/schemas';
+
+import {
+  useAdvancedValidation,
+  useEligibilityCheck
+} from '@/features/taxSimulator/hooks/useTaxCalculation';
 
 import {
   ACTIVITY_TYPES,
@@ -116,6 +134,11 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [showValidationInsights, setShowValidationInsights] = useState(false);
+
+  // Usar novos hooks de validação
+  const { validationResult, validate } = useAdvancedValidation();
+  const { eligibilityResults, checkEligibility } = useEligibilityCheck();
 
   // Form setup com react-hook-form + zod
   const form = useForm<CompanyData>({
@@ -131,7 +154,7 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
     mode: 'onChange'
   });
 
-  const { register, handleSubmit, watch, setValue, formState: { errors, isValid } } = form;
+  const { register, handleSubmit, watch, setValue, getValues, formState: { errors, isValid } } = form;
   const watchedValues = watch();
 
   // Validação do step atual
@@ -163,6 +186,21 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
     const isStepValid = await validateCurrentStep();
 
     if (isStepValid) {
+      // Executar validação avançada se estivermos no último step
+      if (currentStep === FORM_STEPS.length - 1) {
+        const allData = form.getValues();
+        const advancedValidation = validate(allData);
+
+        if (advancedValidation.warnings.length > 0 || advancedValidation.suggestions.length > 0) {
+          setShowValidationInsights(true);
+        }
+
+        // Verificar elegibilidade se tivermos dados suficientes
+        if (allData.faturamentoAnual && allData.atividade) {
+          checkEligibility(allData as CompanyData);
+        }
+      }
+
       if (!completedSteps.includes(currentStep)) {
         setCompletedSteps([...completedSteps, currentStep]);
       }
@@ -172,9 +210,17 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
 
   const prevStep = () => {
     setCurrentStep(Math.max(currentStep - 1, 0));
+    setShowValidationInsights(false);
   };
 
   const onFormSubmit = (data: CompanyData) => {
+    // Validação final avançada
+    const finalValidation = validate(data);
+
+    if (!finalValidation.isValid) {
+      console.warn('Dados com problemas, mas prosseguindo:', finalValidation.warnings);
+    }
+
     // Processar dados antes de enviar
     const processedData = {
       ...data,
@@ -197,7 +243,8 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
   };
 
   return (
-    <div className={`max-w-4xl mx-auto space-y-8 ${className}`}>
+    <TooltipProvider>
+      <div className={`max-w-4xl mx-auto space-y-8 ${className}`}>
       {/* Step Indicator */}
       {showStepIndicator && (
         <Card className="bg-gradient-to-r from-accent/5 to-accent-subtle/5 border-accent/20">
@@ -279,13 +326,25 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
               <div className="space-y-6">
                 {/* Faturamento Anual */}
                 <div className="space-y-2">
-                  <Label htmlFor="faturamentoAnual" className="text-sm font-medium">
-                    Faturamento Anual *
-                  </Label>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="faturamentoAnual" className="text-sm font-medium">
+                      Faturamento Anual *
+                    </Label>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="w-4 h-4 text-muted-foreground hover:text-accent cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p className="text-xs">
+                          Receita bruta total da empresa nos últimos 12 meses, incluindo todas as vendas de produtos ou serviços, antes de qualquer dedução.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <Input
                     id="faturamentoAnual"
                     type="text"
-                    placeholder="Ex: R$ 500.000"
+                    placeholder="Ex: R$ 2.500.000,00 (startup em crescimento) ou R$ 500.000,00 (pequena empresa)"
                     className="focus-ring"
                     {...register('faturamentoAnual', {
                       setValueAs: (value) => {
@@ -295,10 +354,27 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                         return value;
                       }
                     })}
-                    onChange={(e) => {
+                    onBlur={(e) => {
+                      // Formatar apenas quando sair do campo (onBlur)
                       const numericValue = parseCurrency(e.target.value);
+                      if (numericValue > 0) {
+                        e.target.value = formatCurrency(numericValue);
+                        setValue('faturamentoAnual', numericValue);
+                      }
+                    }}
+                    onFocus={(e) => {
+                      // Mostrar apenas números quando focar no campo
+                      const currentValue = getValues('faturamentoAnual');
+                      if (currentValue > 0) {
+                        e.target.value = currentValue.toString();
+                      }
+                    }}
+                    onChange={(e) => {
+                      // Permitir digitação livre, validar apenas números
+                      const input = e.target.value;
+                      const onlyNumbers = input.replace(/[^\d]/g, '');
+                      const numericValue = parseFloat(onlyNumbers) || 0;
                       setValue('faturamentoAnual', numericValue);
-                      e.target.value = formatCurrency(numericValue);
                     }}
                   />
                   {errors.faturamentoAnual && (
@@ -307,22 +383,54 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                       {errors.faturamentoAnual.message}
                     </div>
                   )}
-                  <div className="text-xs text-muted-foreground">
-                    Informe o faturamento bruto dos últimos 12 meses
+                  <div className="text-xs text-muted-foreground space-y-2">
+                    <div>Informe o faturamento bruto dos últimos 12 meses.</div>
+                    <div>💡 Dica: Digite apenas números (ex: 500000 para R$ 500.000)</div>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <span className="text-xs">Valores comuns:</span>
+                      {[100000, 500000, 1000000, 2000000].map((value) => (
+                        <button
+                          key={value}
+                          type="button"
+                          className="text-xs px-2 py-1 bg-accent/10 text-accent rounded hover:bg-accent/20 transition-colors"
+                          onClick={() => {
+                            setValue('faturamentoAnual', value);
+                            const input = document.getElementById('faturamentoAnual') as HTMLInputElement;
+                            if (input) {
+                              input.value = formatCurrency(value);
+                            }
+                          }}
+                        >
+                          {formatCurrency(value, { compact: true })}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
                 {/* Atividade Principal */}
                 <div className="space-y-2">
-                  <Label htmlFor="atividade" className="text-sm font-medium">
-                    Atividade Principal *
-                  </Label>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="atividade" className="text-sm font-medium">
+                      Atividade Principal *
+                    </Label>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="w-4 h-4 text-muted-foreground hover:text-accent cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p className="text-xs">
+                          Selecione a atividade que representa a maior parte da receita da empresa. Isso determinará qual anexo do Simples Nacional será aplicado.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <Select
                     value={watchedValues.atividade}
                     onValueChange={(value) => setValue('atividade', value as ActivityType)}
                   >
                     <SelectTrigger className="focus-ring">
-                      <SelectValue placeholder="Selecione a atividade principal" />
+                      <SelectValue placeholder="Ex: Tecnologia (SaaS), Comércio (e-commerce), Consultoria..." />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.entries(ACTIVITY_TYPES).map(([key, info]) => (
@@ -353,7 +461,7 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                     onValueChange={(value) => setValue('setor', value as BusinessSector)}
                   >
                     <SelectTrigger className="focus-ring">
-                      <SelectValue placeholder="Selecione o setor" />
+                      <SelectValue placeholder="Ex: Serviços (Anexo III), Comércio (Anexo I), Indústria (Anexo II)..." />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.entries(BUSINESS_SECTORS).map(([key, info]) => (
@@ -428,7 +536,7 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                     onValueChange={(value) => setValue('estadoOperacao', value)}
                   >
                     <SelectTrigger className="focus-ring">
-                      <SelectValue placeholder="Selecione o estado" />
+                      <SelectValue placeholder="Ex: São Paulo, Rio de Janeiro, Minas Gerais..." />
                     </SelectTrigger>
                     <SelectContent>
                       {BRAZILIAN_STATES.map((state) => (
@@ -451,14 +559,26 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
 
                 {/* Número de Funcionários */}
                 <div className="space-y-2">
-                  <Label htmlFor="numeroFuncionarios" className="text-sm font-medium">
-                    Número de Funcionários *
-                  </Label>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="numeroFuncionarios" className="text-sm font-medium">
+                      Número de Funcionários *
+                    </Label>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="w-4 h-4 text-muted-foreground hover:text-accent cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p className="text-xs">
+                          Total de funcionários registrados com carteira assinada. Para MEI, o limite é de até 1 funcionário recebendo no máximo 1 salário mínimo.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <Input
                     id="numeroFuncionarios"
                     type="number"
                     min="0"
-                    placeholder="Ex: 5"
+                    placeholder="Ex: 0 (apenas sócios), 5 (pequena equipe), 25 (empresa média)"
                     className="focus-ring"
                     {...register('numeroFuncionarios', { valueAsNumber: true })}
                   />
@@ -609,6 +729,179 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
               </div>
             )}
 
+            {/* Validation Insights */}
+            {showValidationInsights && validationResult && (
+              <div className="space-y-4 p-4 bg-blue-50/50 rounded-lg border border-blue-200">
+                <div className="flex items-center gap-2 text-blue-800">
+                  <AlertCircle className="w-5 h-5" />
+                  <h4 className="font-medium">Insights de Validação</h4>
+                </div>
+
+                {validationResult.warnings.length > 0 && (
+                  <div>
+                    <h5 className="text-sm font-medium text-amber-800 mb-2">⚠️ Pontos de Atenção:</h5>
+                    <ul className="space-y-1">
+                      {validationResult.warnings.map((warning, index) => (
+                        <li key={index} className="text-sm text-amber-700">
+                          • {warning}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {validationResult.suggestions.length > 0 && (
+                  <div>
+                    <h5 className="text-sm font-medium text-blue-800 mb-2">💡 Sugestões:</h5>
+                    <ul className="space-y-1">
+                      {validationResult.suggestions.map((suggestion, index) => (
+                        <li key={index} className="text-sm text-blue-700">
+                          • {suggestion}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Eligibility Quick Check */}
+            {currentStep === FORM_STEPS.length - 1 && Object.keys(eligibilityResults).length > 0 && (
+              <div className="space-y-4 p-4 bg-green-50/50 rounded-lg border border-green-200">
+                <div className="flex items-center gap-2 text-green-800">
+                  <CheckCircle className="w-5 h-5" />
+                  <h4 className="font-medium">Pré-verificação de Elegibilidade</h4>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {Object.entries(eligibilityResults).map(([regime, check]) => (
+                    <div
+                      key={regime}
+                      className={`p-3 rounded-md border ${
+                        check.eligible
+                          ? 'bg-green-100 border-green-300'
+                          : 'bg-red-100 border-red-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">
+                          {regime.replace('_', ' ').toUpperCase()}
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          check.eligible
+                            ? 'bg-green-200 text-green-800'
+                            : 'bg-red-200 text-red-800'
+                        }`}>
+                          {check.eligible ? 'Elegível' : 'Inelegível'}
+                        </span>
+                      </div>
+                      {!check.eligible && check.reason && (
+                        <p className="text-xs text-red-700 mt-1">{check.reason}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* FAQ Inline */}
+            <div className="pt-6 border-t">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-accent" />
+                Dúvidas Frequentes
+              </h3>
+              <Accordion type="single" collapsible className="space-y-2">
+                <AccordionItem value="faq-1" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                    Como definir o faturamento anual correto?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    <div className="space-y-2">
+                      <p>O faturamento anual é a soma total de todas as receitas da empresa nos últimos 12 meses:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li>Inclua todas as vendas de produtos e serviços</li>
+                        <li>Considere receitas antes de deduções e impostos</li>
+                        <li>Para empresas novas, use a projeção para 12 meses</li>
+                        <li>Não inclua investimentos ou empréstimos recebidos</li>
+                      </ul>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="faq-2" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                    Qual a diferença entre os anexos do Simples Nacional?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    <div className="space-y-2">
+                      <p>Cada anexo tem alíquotas diferentes baseadas na atividade:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li><strong>Anexo I:</strong> Comércio - alíquotas de 4% a 19%</li>
+                        <li><strong>Anexo II:</strong> Indústria - alíquotas de 4,5% a 30%</li>
+                        <li><strong>Anexo III:</strong> Serviços gerais - alíquotas de 6% a 33%</li>
+                        <li><strong>Anexo IV:</strong> Serviços específicos - alíquotas de 4,5% a 33%</li>
+                        <li><strong>Anexo V:</strong> Serviços profissionais - alíquotas de 15,5% a 30,5%</li>
+                      </ul>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="faq-3" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                    Quando vale a pena sair do Simples Nacional?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    <div className="space-y-2">
+                      <p>Considere migrar do Simples Nacional quando:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li>Faturamento próximo do limite (R$ 4,8 milhões)</li>
+                        <li>Alta margem de lucro (acima de 20-25%)</li>
+                        <li>Muitos créditos de PIS/COFINS para compensar</li>
+                        <li>Prejuízos contábeis que podem compensar IR</li>
+                        <li>Alíquota efetiva do Simples muito alta</li>
+                      </ul>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="faq-4" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                    MEI é sempre a melhor opção para pequenos negócios?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    <div className="space-y-2">
+                      <p>Nem sempre. MEI tem limitações importantes:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li>Limite de R$ 81.000/ano de faturamento</li>
+                        <li>Máximo de 1 funcionário</li>
+                        <li>Atividades limitadas</li>
+                        <li>Sem emissão de nota fiscal para PJ</li>
+                        <li>Para faturamentos acima de R$ 60.000, Simples pode ser melhor</li>
+                      </ul>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="faq-5" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                    Como funciona a migração entre regimes?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    <div className="space-y-2">
+                      <p>A migração tem prazos específicos:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li><strong>Simples Nacional:</strong> Opção até 31 de janeiro</li>
+                        <li><strong>Lucro Presumido:</strong> Opção até 31 de janeiro</li>
+                        <li><strong>Lucro Real:</strong> Pode optar a qualquer momento</li>
+                        <li>Mudanças só valem para o ano seguinte (exceto Lucro Real)</li>
+                        <li>Sempre consulte um contador antes de migrar</li>
+                      </ul>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+
             {/* Navigation */}
             <div className="flex justify-between items-center pt-6 border-t">
               <div>
@@ -671,6 +964,7 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
         </CardContent>
       </Card>
     </div>
+    </TooltipProvider>
   );
 };
 

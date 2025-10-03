@@ -6,11 +6,12 @@
  * Typography: font-sans, tracking-tight, leading-relaxed
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import {
   Calculator,
   ArrowLeft,
@@ -20,39 +21,41 @@ import {
   Download,
   TrendingUp,
   AlertCircle,
-  CheckCircle
+  CheckCircle,
+  Brain,
+  Target,
+  BarChart3
 } from "lucide-react";
 
 import CompanyDataForm from './CompanyDataForm';
 import TaxResults from './TaxResults';
 import {
   CompanyData,
-  TaxCalculationResult
+  TaxCalculationResult,
+  TaxComparison
 } from '@/features/taxSimulator/lib/types';
 import {
-  compareAllRegimes,
-  getRecommendedRegime,
-  getBestEconomicOption
-} from '@/features/taxSimulator/lib/taxCalculations';
-import {
-  formatCurrency
+  formatCurrency,
+  formatPercentage
 } from '@/features/taxSimulator/lib/utils';
+
+// Importar novos hooks
+import { useTaxCalculation } from '@/features/taxSimulator/hooks/useTaxCalculation';
+import { useCompanyData } from '@/features/taxSimulator/hooks/useCompanyData';
 
 // ==================== INTERFACES ====================
 
 export interface TaxSimulatorProps {
   className?: string;
-  onSaveSimulation?: (data: CompanyData, results: TaxCalculationResult[]) => void;
-  onShareResults?: (results: TaxCalculationResult[]) => void;
-  onExportPDF?: (data: CompanyData, results: TaxCalculationResult[]) => void;
+  onSaveSimulation?: (comparison: TaxComparison) => void;
+  onShareResults?: (comparison: TaxComparison) => void;
+  onExportPDF?: (comparison: TaxComparison) => void;
   initialData?: Partial<CompanyData>;
+  showAdvancedInsights?: boolean;
 }
 
 interface SimulatorState {
   stage: 'form' | 'results' | 'loading';
-  companyData?: CompanyData;
-  results?: TaxCalculationResult[];
-  error?: string;
 }
 
 // ==================== MAIN COMPONENT ====================
@@ -62,124 +65,145 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
   onSaveSimulation,
   onShareResults,
   onExportPDF,
-  initialData
+  initialData,
+  showAdvancedInsights = true
 }) => {
   const [state, setState] = useState<SimulatorState>({
     stage: 'form'
   });
 
+  // Usar novos hooks
+  const {
+    isCalculating,
+    results,
+    comparison,
+    error: calculationError,
+    calculate,
+    clear: clearCalculation,
+    getBestOption,
+    getEconomyAnalysis
+  } = useTaxCalculation();
+
+  const {
+    data: companyData,
+    isValid: isDataValid,
+    errors: dataErrors,
+    updateData,
+    save: saveCompanyData
+  } = useCompanyData(initialData);
+
+  // ==================== EFFECTS ====================
+
+  // Sincronizar estágio com estados dos hooks
+  useEffect(() => {
+    if (isCalculating) {
+      setState(prev => ({ ...prev, stage: 'loading' }));
+    } else if (results && results.length > 0) {
+      setState(prev => ({ ...prev, stage: 'results' }));
+    } else {
+      setState(prev => ({ ...prev, stage: 'form' }));
+    }
+  }, [isCalculating, results]);
+
   // ==================== HANDLERS ====================
 
   const handleFormSubmit = async (formData: CompanyData) => {
-    setState(prev => ({ ...prev, stage: 'loading' }));
-
     try {
-      // Simular delay para mostrar loading
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Atualizar dados da empresa
+      updateData(formData);
 
-      // Executar cálculos
-      const calculationResults = compareAllRegimes(formData);
+      // Salvar dados localmente
+      saveCompanyData();
 
-      // Verificar se há resultados elegíveis
-      const eligibleResults = calculationResults.filter(r => r.elegivel);
+      // Executar cálculos usando o hook
+      await calculate(formData);
 
-      if (eligibleResults.length === 0) {
-        throw new Error('Nenhum regime tributário é elegível para esta empresa. Verifique os dados informados.');
+      // Notificação de sucesso será mostrada pelo hook se bem-sucedido
+      const economyAnalysis = getEconomyAnalysis();
+      if (economyAnalysis && economyAnalysis.economiaAnual > 0) {
+        toast.success('Simulação concluída!', {
+          description: `Potencial economia de ${formatCurrency(economyAnalysis.economiaAnual)} identificada.`,
+          action: {
+            label: 'Ver Detalhes',
+            onClick: () => setState(prev => ({ ...prev, stage: 'results' }))
+          }
+        });
+      } else {
+        toast.success('Análise tributária completa!', {
+          description: 'Confira os resultados detalhados abaixo.'
+        });
       }
 
-      // Salvar estado com resultados
-      setState({
-        stage: 'results',
-        companyData: formData,
-        results: calculationResults,
-        error: undefined
-      });
-
-      // Mostrar notificação de sucesso
-      const bestOption = getBestEconomicOption(formData);
-      const savings = bestOption ? calculateMaxSavings(calculationResults, bestOption) : 0;
-
-      toast.success('Simulação concluída!', {
-        description: savings > 0
-          ? `Potencial economia de ${formatCurrency(savings)} foi identificada.`
-          : 'Análise tributária completa disponível.'
-      });
-
     } catch (error) {
-      console.error('Erro na simulação:', error);
-
-      setState(prev => ({
-        ...prev,
-        stage: 'form',
-        error: error instanceof Error ? error.message : 'Erro desconhecido na simulação'
-      }));
-
-      toast.error('Erro na simulação', {
-        description: error instanceof Error ? error.message : 'Tente novamente ou entre em contato com o suporte.'
-      });
+      // Error já tratado pelo hook
+      console.error('Erro no submit:', error);
     }
   };
 
   const handleNewSimulation = () => {
-    setState({
-      stage: 'form',
-      companyData: undefined,
-      results: undefined,
-      error: undefined
-    });
+    clearCalculation();
+    setState({ stage: 'form' });
   };
 
   const handleEditData = () => {
-    setState(prev => ({
-      ...prev,
-      stage: 'form'
-    }));
+    setState(prev => ({ ...prev, stage: 'form' }));
   };
 
   const handleSaveSimulation = () => {
-    if (state.companyData && state.results && onSaveSimulation) {
-      onSaveSimulation(state.companyData, state.results);
-      toast.success('Simulação salva com sucesso!');
+    if (comparison && onSaveSimulation) {
+      onSaveSimulation(comparison);
+      toast.success('Simulação salva com sucesso!', {
+        description: 'Você pode acessar suas simulações salvas a qualquer momento.'
+      });
     }
   };
 
   const handleShareResults = () => {
-    if (state.results && onShareResults) {
-      onShareResults(state.results);
-      toast.success('Link de compartilhamento gerado!');
+    if (comparison && onShareResults) {
+      onShareResults(comparison);
+      toast.success('Link de compartilhamento gerado!', {
+        description: 'Compartilhe os resultados com seu contador ou equipe.'
+      });
     }
   };
 
   const handleExportPDF = () => {
-    if (state.companyData && state.results && onExportPDF) {
-      onExportPDF(state.companyData, state.results);
-      toast.success('PDF gerado com sucesso!');
+    if (comparison && onExportPDF) {
+      onExportPDF(comparison);
+      toast.success('PDF gerado com sucesso!', {
+        description: 'Relatório detalhado pronto para download.'
+      });
     }
   };
 
   // ==================== HELPER FUNCTIONS ====================
 
-  const calculateMaxSavings = (results: TaxCalculationResult[], bestOption: TaxCalculationResult): number => {
-    const eligibleResults = results.filter(r => r.elegivel);
-    if (eligibleResults.length <= 1) return 0;
-
-    const maxCost = Math.max(...eligibleResults.map(r => r.impostos.total));
-    return maxCost - bestOption.impostos.total;
-  };
-
   const getResultsSummary = () => {
-    if (!state.results) return null;
+    if (!results || !comparison) return null;
 
-    const eligible = state.results.filter(r => r.elegivel);
-    const bestOption = state.companyData ? getBestEconomicOption(state.companyData) : null;
-    const recommended = state.companyData ? getRecommendedRegime(state.companyData) : null;
-    const maxSavings = bestOption ? calculateMaxSavings(state.results, bestOption) : 0;
+    const eligible = results.filter(r => r.elegivel);
+    const bestOption = getBestOption();
+    const economyAnalysis = getEconomyAnalysis();
 
     return {
       eligibleCount: eligible.length,
       bestOption,
-      recommended,
-      maxSavings
+      comparison,
+      economyAnalysis,
+      insights: comparison.insights || [],
+      alerts: comparison.alertas || [],
+      nextActions: comparison.proximasAcoes || []
+    };
+  };
+
+  const getAdvancedInsights = () => {
+    if (!comparison || !showAdvancedInsights) return null;
+
+    return {
+      hasInsights: comparison.insights.length > 0,
+      hasAlerts: comparison.alertas.length > 0,
+      hasActions: comparison.proximasAcoes.length > 0,
+      economyPotential: comparison.economiaMaxima > 0
     };
   };
 
@@ -222,14 +246,36 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
       </div>
 
       {/* Error Message */}
-      {state.error && (
+      {calculationError && (
         <Card className="border-red-200 bg-red-50">
           <CardContent className="py-4">
             <div className="flex items-center gap-3 text-red-800">
               <AlertCircle className="w-5 h-5" />
               <div>
                 <div className="font-medium">Erro na Simulação</div>
-                <div className="text-sm">{state.error}</div>
+                <div className="text-sm">{calculationError}</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Advanced Insights Banner */}
+      {showAdvancedInsights && state.stage === 'results' && getAdvancedInsights()?.economyPotential && (
+        <Card className="border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardContent className="py-4">
+            <div className="flex items-center gap-3 text-green-800">
+              <Brain className="w-5 h-5" />
+              <div>
+                <div className="font-medium flex items-center gap-2">
+                  Análise Inteligente Concluída
+                  <Badge variant="secondary" className="text-xs">
+                    IA
+                  </Badge>
+                </div>
+                <div className="text-sm">
+                  Nossa IA identificou oportunidades de otimização tributária específicas para seu negócio.
+                </div>
               </div>
             </div>
           </CardContent>
@@ -239,9 +285,10 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
       {/* Form Stage */}
       {state.stage === 'form' && (
         <CompanyDataForm
-          initialData={state.companyData || initialData}
+          initialData={companyData}
           onSubmit={handleFormSubmit}
-          isLoading={false}
+          isLoading={isCalculating}
+          errors={dataErrors}
           className="animate-slide-up"
         />
       )}
@@ -252,30 +299,53 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
           <CardContent>
             <div className="space-y-6">
               <div className="w-16 h-16 mx-auto bg-gradient-to-r from-accent to-accent-subtle rounded-full flex items-center justify-center animate-pulse">
-                <RefreshCw className="w-8 h-8 text-white animate-spin" />
+                <Brain className="w-8 h-8 text-white animate-pulse" />
               </div>
 
               <div>
                 <h3 className="text-xl font-semibold mb-2">
-                  Calculando Impostos...
+                  Análise Inteligente em Andamento...
                 </h3>
                 <p className="text-muted-foreground">
-                  Analisando todos os regimes tributários disponíveis
+                  Nossa IA está analisando os melhores regimes tributários para seu negócio
                 </p>
               </div>
 
-              <div className="max-w-md mx-auto space-y-3">
-                <div className="flex items-center gap-3 text-sm">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>Verificando elegibilidade dos regimes</span>
+              {/* Progress Indicator */}
+              <div className="max-w-md mx-auto space-y-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Progresso da Análise</span>
+                    <span className="font-medium">85%</span>
+                  </div>
+                  <Progress value={85} className="h-2" />
                 </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>Calculando impostos para cada regime</span>
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                    <span>Validando dados da empresa</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                    <span>Verificando elegibilidade avançada</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                    <span>Calculando impostos detalhados</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <Target className="w-4 h-4 text-accent animate-pulse" />
+                    <span>Identificando oportunidades de economia</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <BarChart3 className="w-4 h-4 animate-pulse" />
+                    <span>Gerando insights personalizados</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <RefreshCw className="w-4 h-4 text-accent animate-spin" />
-                  <span>Gerando recomendações personalizadas</span>
+
+                <div className="text-xs text-muted-foreground text-center">
+                  ⚡ Processamento otimizado com IA • Análise em tempo real
                 </div>
               </div>
             </div>
@@ -284,14 +354,19 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
       )}
 
       {/* Results Stage */}
-      {state.stage === 'results' && state.results && state.companyData && (
+      {state.stage === 'results' && results && comparison && (
         <div className="space-y-8 animate-slide-up">
           {/* Results Summary Header */}
           <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-green-800">
                 <CheckCircle className="w-5 h-5" />
-                Simulação Concluída com Sucesso
+                Análise Tributária Completa
+                {showAdvancedInsights && (
+                  <Badge variant="gradient" className="ml-2">
+                    IA Enhanced
+                  </Badge>
+                )}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -324,16 +399,16 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
                       </div>
                     )}
 
-                    {summary.maxSavings > 0 && (
+                    {summary.economyAnalysis && summary.economyAnalysis.economiaAnual > 0 && (
                       <div className="text-center">
                         <div className="text-2xl font-bold text-purple-700">
-                          {formatCurrency(summary.maxSavings)}
+                          {formatCurrency(summary.economyAnalysis.economiaAnual)}
                         </div>
                         <div className="text-sm text-purple-600">
                           Economia Potencial
                         </div>
                         <div className="text-xs text-purple-500">
-                          vs regime mais caro
+                          {formatPercentage(summary.economyAnalysis.economiaPercentual)} de redução
                         </div>
                       </div>
                     )}
@@ -342,6 +417,77 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
               })()}
             </CardContent>
           </Card>
+
+          {/* Advanced Insights Section */}
+          {showAdvancedInsights && getAdvancedInsights() && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Insights */}
+              {comparison.insights.length > 0 && (
+                <Card className="border-blue-200 bg-blue-50/50">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center gap-2 text-blue-800">
+                      <Brain className="w-5 h-5" />
+                      Insights Inteligentes
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {comparison.insights.slice(0, 3).map((insight, index) => (
+                        <li key={index} className="text-sm text-blue-700 flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                          {insight}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Alertas */}
+              {comparison.alertas.length > 0 && (
+                <Card className="border-amber-200 bg-amber-50/50">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center gap-2 text-amber-800">
+                      <AlertCircle className="w-5 h-5" />
+                      Pontos de Atenção
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {comparison.alertas.slice(0, 3).map((alerta, index) => (
+                        <li key={index} className="text-sm text-amber-700 flex items-start gap-2">
+                          <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                          {alerta}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Próximas Ações */}
+              {comparison.proximasAcoes.length > 0 && (
+                <Card className="border-green-200 bg-green-50/50">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center gap-2 text-green-800">
+                      <Target className="w-5 h-5" />
+                      Próximas Ações
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {comparison.proximasAcoes.slice(0, 3).map((acao, index) => (
+                        <li key={index} className="text-sm text-green-700 flex items-start gap-2">
+                          <Target className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                          {acao}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 justify-center">
@@ -399,10 +545,12 @@ const TaxSimulator: React.FC<TaxSimulatorProps> = ({
 
           {/* Results Display */}
           <TaxResults
-            results={state.results}
-            companyData={state.companyData}
+            results={results}
+            companyData={companyData as CompanyData}
+            comparison={comparison}
             onExportPDF={handleExportPDF}
             onShare={handleShareResults}
+            showAdvancedInsights={showAdvancedInsights}
             className="animate-fade-in"
           />
         </div>

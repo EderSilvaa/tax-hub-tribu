@@ -556,6 +556,22 @@ export const MEI_TABLE: MEITable[] = [
       inss: 66.60,      // 5% sobre salário mínimo
       iss: 5.00         // R$ 5,00 fixo
     }
+  },
+  {
+    setor: BusinessSector.SERVICOS_ANEXO_IV,
+    valorMensal: 71.60,
+    breakdown: {
+      inss: 66.60,      // 5% sobre salário mínimo
+      iss: 5.00         // R$ 5,00 fixo
+    }
+  },
+  {
+    setor: BusinessSector.SERVICOS_ANEXO_V,
+    valorMensal: 71.60,
+    breakdown: {
+      inss: 66.60,      // 5% sobre salário mínimo
+      iss: 5.00         // R$ 5,00 fixo
+    }
   }
 ];
 

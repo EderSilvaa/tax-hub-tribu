@@ -18,10 +18,10 @@ const Services = () => {
       href: "/servicos/sistema-compliance"
     },
     {
-      title: "Plataforma de Planejamento Tributário",
-      description: "Ferramenta que simula cenários tributários e sugere a melhor estratégia fiscal para sua empresa.",
-      features: ["Simulações fiscais", "Comparativo de regimes", "Projeções de economia", "Análise de viabilidade"],
-      href: "/servicos/planejamento-tributario"
+      title: "Simulador Tributário Interativo",
+      description: "Ferramenta inteligente que analisa sua empresa e compara todos os regimes tributários em tempo real, mostrando economia detalhada.",
+      features: ["Cálculo em tempo real", "Comparativo completo de regimes", "Análise de economia potencial", "Recomendações personalizadas"],
+      href: "/simulador"
     },
     {
       title: "Acompanhamento Jurídico",
@@ -112,12 +112,17 @@ const Services = () => {
 
         <div className="text-center mt-20 animate-scale-in">
           <div className="glass rounded-2xl p-8 max-w-md mx-auto">
-            <h3 className="text-2xl font-semibold mb-4">Teste nossos softwares!</h3>
+            <h3 className="text-2xl font-semibold mb-4">✨ Novo: Simulador Tributário!</h3>
             <p className="text-muted-foreground mb-6">
-              Experimente nossas soluções tecnológicas e descubra o potencial de economia da sua empresa.
+              Descubra em minutos qual regime tributário oferece a maior economia para sua empresa.
             </p>
-            <Button variant="gradient" size="xl" className="px-8 py-4 text-lg font-semibold shadow-glow">
-              Começar Teste Gratuito
+            <Button
+              variant="gradient"
+              size="xl"
+              className="px-8 py-4 text-lg font-semibold shadow-glow"
+              onClick={() => window.location.href = '/simulador'}
+            >
+              🚀 Simular Agora - Grátis
             </Button>
           </div>
         </div>

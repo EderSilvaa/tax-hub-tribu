@@ -68,13 +68,35 @@ export function formatNumber(value: number, options: { compact?: boolean } = {})
 }
 
 export function parseCurrency(value: string): number {
-  // Remove formatação e converte para número
-  const cleaned = value
-    .replace(/[R$\s]/g, '')
-    .replace(/\./g, '')
-    .replace(',', '.');
+  if (!value) return 0;
 
-  return parseFloat(cleaned) || 0;
+  // Remove símbolos de moeda e espaços
+  let cleaned = value.replace(/[R$\s]/g, '');
+
+  // Se tem vírgula, assume formato brasileiro (123.456,78)
+  if (cleaned.includes(',')) {
+    // Remove pontos (separador de milhares) e substitui vírgula por ponto decimal
+    cleaned = cleaned.replace(/\./g, '').replace(',', '.');
+  }
+  // Se não tem vírgula mas tem ponto, pode ser formato americano ou separador de milhares
+  else if (cleaned.includes('.')) {
+    // Se o ponto está nas últimas 3 posições, é decimal (1000.50)
+    // Se não, é separador de milhares (1.000)
+    const lastDotIndex = cleaned.lastIndexOf('.');
+    if (cleaned.length - lastDotIndex === 3) {
+      // É decimal, mantém apenas o último ponto
+      const parts = cleaned.split('.');
+      const integer = parts.slice(0, -1).join('');
+      const decimal = parts[parts.length - 1];
+      cleaned = integer + '.' + decimal;
+    } else {
+      // São separadores de milhares, remove todos os pontos
+      cleaned = cleaned.replace(/\./g, '');
+    }
+  }
+
+  const result = parseFloat(cleaned) || 0;
+  return Math.max(0, result); // Garante que não seja negativo
 }
 
 // ==================== VALIDATION FUNCTIONS ====================
@@ -430,4 +452,10 @@ export function removeFromLocalStorage(key: string): void {
   } catch (error) {
     console.warn('Failed to remove from localStorage:', error);
   }
+}
+
+// ==================== ID GENERATION ====================
+
+export function generateId(): string {
+  return `txh_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 }

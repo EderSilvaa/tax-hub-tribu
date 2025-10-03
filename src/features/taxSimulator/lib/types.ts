@@ -59,6 +59,7 @@ export interface CompanyData {
 
   // Contextual para startups
   startupStage?: StartupStage;
+  estagio?: string; // Compatibilidade
 
   // Dados opcionais para cálculos mais precisos
   lucroLiquido?: number;
@@ -171,10 +172,12 @@ export interface CompanyDataFormProps {
 export interface TaxResultsProps {
   results: TaxCalculationResult[];
   companyData: CompanyData;
+  comparison?: TaxComparison;
 
   // Configurações visuais
   className?: string;
   layout?: 'grid' | 'list' | 'comparison';
+  showAdvancedInsights?: boolean;
 
   // Callbacks
   onSelectRegime?: (regime: TaxRegime) => void;
@@ -186,11 +189,14 @@ export interface TaxResultsProps {
 export interface RegimeCardProps {
   result: TaxCalculationResult;
   isBest?: boolean;
+  isRecommended?: boolean;
   isSelected?: boolean;
 
   // Configurações visuais (seguindo design system)
   variant?: 'default' | 'highlighted' | 'compact';
   showDetails?: boolean;
+  showAdvancedInsights?: boolean;
+  className?: string;
 
   // Callbacks
   onClick?: () => void;
@@ -274,6 +280,9 @@ export interface UseCompanyDataReturn {
   reset: () => void;
   save: () => void;
   load: (id: string) => void;
+
+  // Metadados
+  lastSaved: Date | null;
 }
 
 // ==================== UTILS TYPES ====================
@@ -333,4 +342,49 @@ export class ValidationError extends Error {
     super(message);
     this.name = 'ValidationError';
   }
+}
+
+// ==================== BUSINESS LOGIC TYPES (Task 2.3) ====================
+
+export interface EligibilityCheck {
+  eligible: boolean;
+  reason: string | null;
+  warnings: string[];
+  recommendations: string[];
+  blockers: string[];
+  score: number; // 0-100
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: Record<string, string>;
+  warnings: string[];
+  suggestions: string[];
+}
+
+export interface ComparisonAnalysis {
+  bestEconomic: TaxCalculationResult;
+  bestRecommended: TaxCalculationResult;
+  totalSavingsPotential: number;
+  savings: Array<{
+    regime: TaxRegime;
+    savings: number;
+    savingsPercentage: number;
+    isCurrentBest: boolean;
+  }>;
+  riskAnalysis: Array<{
+    regime: TaxRegime;
+    riskLevel: 'baixo' | 'medio' | 'alto';
+    risks: string[];
+    mitigations: string[];
+  }>;
+  growthProjections: Array<{
+    regime: TaxRegime;
+    sustainable: boolean;
+    growthLimit?: number;
+    projectedTaxAt50PercentGrowth: number;
+    projectedTaxAt100PercentGrowth: number;
+  }>;
+  eligibleCount: number;
+  analysisDate: Date;
 }
