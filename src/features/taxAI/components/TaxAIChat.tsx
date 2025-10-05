@@ -155,43 +155,6 @@ const TaxAIChat: React.FC = () => {
                   regimes tributários, cálculos, dúvidas fiscais e muito mais.
                 </p>
               </div>
-
-              {/* Quick Questions */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-3xl mb-8">
-                {quickQuestions.map((question, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    className="p-4 h-auto text-left justify-start hover:bg-accent/10 hover:border-accent transition-all group"
-                    onClick={() => setMessage(question)}
-                  >
-                    <Plus className="w-4 h-4 mr-3 flex-shrink-0 text-accent group-hover:scale-110 transition-transform" />
-                    <span className="text-sm text-left">{question}</span>
-                  </Button>
-                ))}
-              </div>
-
-              {/* Features */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full text-sm">
-                <div className="p-4 rounded-lg bg-muted/50 border border-border/50">
-                  <div className="font-semibold mb-1 text-foreground">💡 Precisa</div>
-                  <p className="text-muted-foreground text-xs">
-                    Informações atualizadas sobre legislação tributária
-                  </p>
-                </div>
-                <div className="p-4 rounded-lg bg-muted/50 border border-border/50">
-                  <div className="font-semibold mb-1 text-foreground">🚀 Rápida</div>
-                  <p className="text-muted-foreground text-xs">
-                    Respostas instantâneas para suas dúvidas fiscais
-                  </p>
-                </div>
-                <div className="p-4 rounded-lg bg-muted/50 border border-border/50">
-                  <div className="font-semibold mb-1 text-foreground">🎯 Didática</div>
-                  <p className="text-muted-foreground text-xs">
-                    Explicações claras sobre conceitos complexos
-                  </p>
-                </div>
-              </div>
             </div>
           ) : (
             // Messages List

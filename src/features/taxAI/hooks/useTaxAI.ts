@@ -43,7 +43,10 @@ export const useTaxAI = () => {
         content: msg.content
       }));
 
-      // Chamar backend Express
+      // Chamar backend Express com timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 segundos
+
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
@@ -52,8 +55,11 @@ export const useTaxAI = () => {
         body: JSON.stringify({
           message: content,
           history
-        })
+        }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -73,13 +79,25 @@ export const useTaxAI = () => {
 
     } catch (err) {
       console.error('Erro ao enviar mensagem:', err);
-      const errorMsg = err instanceof Error ? err.message : 'Erro desconhecido';
+
+      let errorMsg = 'Erro desconhecido';
+      let userFriendlyMsg = 'Desculpe, ocorreu um erro temporário. Por favor, tente novamente em alguns instantes.';
+
+      if (err instanceof Error) {
+        errorMsg = err.message;
+
+        if (err.name === 'AbortError') {
+          errorMsg = 'Timeout: requisição demorou mais de 60 segundos';
+          userFriendlyMsg = 'A requisição demorou muito tempo. Por favor, tente novamente com uma pergunta mais específica.';
+        }
+      }
+
       setError(errorMsg);
 
       // Fallback: resposta de erro amigável
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'Desculpe, ocorreu um erro temporário. Por favor, tente novamente em alguns instantes.',
+        content: userFriendlyMsg,
         role: 'assistant',
         timestamp: new Date()
       };

@@ -3,9 +3,17 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
 import { searchRelevantDocs, formatContextForPrompt, initializeVectorStore } from './services/pdfProcessor.js';
+import { buscarDadosPublicosRelevantes, formatarDadosPublicosParaRAG } from './services/publicDataAPI.js';
+import publicDataRoutes from './routes/publicDataRoutes.js';
 
 // Carregar variáveis de ambiente (busca no diretório pai)
-dotenv.config({ path: '../.env.local' });
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '..', '.env.local') });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,39 +27,58 @@ const openai = new OpenAI({
 app.use(cors());
 app.use(express.json());
 
+// Rotas de APIs públicas
+app.use('/api/public-data', publicDataRoutes);
+
 // Sistema de prompt especializado em tributação brasileira com RAG
-const SYSTEM_PROMPT = `Você é a TaxIA, uma assistente especializada em tributação brasileira.
+const SYSTEM_PROMPT = `Você é a TaxIA, uma assistente especializada em tributação brasileira com ACESSO A DADOS PÚBLICOS EM TEMPO REAL.
+
+CAPACIDADES ESPECIAIS:
+✅ VOCÊ TEM ACESSO A APIs PÚBLICAS BRASILEIRAS:
+- Consulta CNPJ via BrasilAPI (dados atualizados da Receita Federal)
+- Índices econômicos do Banco Central (SELIC, IPCA, CDI, TJLP)
+- Tabelas do Simples Nacional 2024 (todas as faixas e alíquotas)
+- Lista de bancos e feriados nacionais
+
+✅ VOCÊ PODE E DEVE:
+- Consultar CNPJs quando solicitado
+- Fornecer dados REAIS e ATUALIZADOS de empresas
+- Usar tabelas oficiais do Simples Nacional
+- Informar índices econômicos atuais
 
 CARACTERÍSTICAS:
 - Especialista em regimes tributários (MEI, Simples Nacional, Lucro Presumido, Lucro Real)
 - Conhece profundamente a legislação tributária brasileira, incluindo a Reforma Tributária
+- TEM ACESSO A DADOS PÚBLICOS OFICIAIS EM TEMPO REAL
 - Ajuda empresários a entender e escolher o melhor regime tributário
 - Explica de forma clara e didática conceitos complexos
 - Sempre contextualiza as respostas para a realidade brasileira
-- Possui conhecimento técnico atualizado sobre tributação
 
 DIRETRIZES:
-1. SEMPRE priorize as informações do CONTEXTO RELEVANTE DOS DOCUMENTOS quando disponível
-2. Integre naturalmente as informações dos documentos na sua resposta, sem citar fontes explicitamente
-3. Responda como se o conhecimento fosse seu próprio, de forma fluida e orgânica
-4. Use linguagem acessível, mas técnica quando necessário
-5. Sempre mencione quando uma informação pode necessitar confirmação com contador
-6. Forneça exemplos práticos quando relevante
-7. Seja proativa em sugerir próximos passos ou simulações
-8. Mantenha o foco em tributação e questões fiscais
-9. Se houver conflito entre seu conhecimento base e os documentos, priorize SEMPRE os DOCUMENTOS
+1. SEMPRE priorize as informações de DADOS PÚBLICOS ATUALIZADOS quando disponíveis
+2. Use dados REAIS de CNPJ, índices e tabelas oficiais
+3. SEMPRE que houver dados públicos no contexto, USE-OS para responder
+4. Integre naturalmente as informações dos documentos e APIs públicas
+5. Responda como se o conhecimento fosse seu próprio, de forma fluida e orgânica
+6. Use linguagem acessível, mas técnica quando necessário
+7. Sempre mencione quando uma informação pode necessitar confirmação com contador
+8. Forneça exemplos práticos quando relevante
+9. Se houver DADOS PÚBLICOS ATUALIZADOS, priorize-os sobre conhecimento base
 
-IMPORTANTE:
-- NÃO cite fontes, documentos ou páginas nas suas respostas
-- NÃO diga "de acordo com", "conforme documento", "segundo material"
-- Apresente a informação de forma direta e confiante
-- Fale como especialista que domina o assunto
+IMPORTANTE - SOBRE DADOS PÚBLICOS:
+✅ VOCÊ TEM acesso a APIs públicas e PODE consultar CNPJs
+✅ VOCÊ POSSUI dados atualizados do Simples Nacional, SELIC, IPCA
+✅ Quando houver dados no "DADOS PÚBLICOS ATUALIZADOS" ou "CONTEXTO", USE-OS
+❌ NÃO diga que "não pode consultar" quando os dados estão no contexto
+❌ NÃO cite fontes, documentos ou páginas nas suas respostas
+❌ NÃO diga "de acordo com", "conforme documento"
+✅ Apresente os dados de forma direta e confiante
 
 LIMITAÇÕES:
 - Não forneça conselhos jurídicos específicos
 - Sempre recomende consultar um contador para decisões importantes
 
-Responda de forma útil, clara e sempre pensando no melhor interesse do empresário brasileiro.`;
+Responda de forma útil, clara, usando DADOS REAIS quando disponíveis no contexto.`;
 
 // Endpoint de health check
 app.get('/health', (req, res) => {
@@ -71,16 +98,27 @@ app.post('/api/chat', async (req, res) => {
 
     console.log(`\n💬 Nova mensagem: "${message.substring(0, 60)}..."`);
 
-    // ETAPA 1: Buscar documentos relevantes (RAG)
+    // ETAPA 1: Buscar dados públicos relevantes
+    console.log('🌐 Buscando dados públicos...');
+    const dadosPublicos = await buscarDadosPublicosRelevantes(message);
+    const publicDataContext = Object.keys(dadosPublicos).length > 0
+      ? formatarDadosPublicosParaRAG(dadosPublicos)
+      : '';
+
+    if (publicDataContext) {
+      console.log(`✓ Dados públicos obtidos: ${Object.keys(dadosPublicos).join(', ')}`);
+    }
+
+    // ETAPA 2: Buscar documentos relevantes (RAG)
     console.log('🔍 Buscando documentos relevantes...');
     const relevantDocs = await searchRelevantDocs(message, 4);
     console.log(`✓ ${relevantDocs.length} documentos encontrados`);
 
-    // ETAPA 2: Formatar contexto com documentos
+    // ETAPA 3: Formatar contexto com documentos
     const contextPrompt = formatContextForPrompt(relevantDocs);
 
-    // ETAPA 3: Preparar mensagens para OpenAI com contexto RAG
-    const systemPromptWithContext = SYSTEM_PROMPT + contextPrompt;
+    // ETAPA 4: Preparar mensagens para OpenAI com contexto RAG + dados públicos
+    const systemPromptWithContext = SYSTEM_PROMPT + publicDataContext + contextPrompt;
 
     const messages = [
       { role: 'system', content: systemPromptWithContext },
@@ -88,7 +126,7 @@ app.post('/api/chat', async (req, res) => {
       { role: 'user', content: message }
     ];
 
-    // ETAPA 4: Chamar OpenAI API usando SDK oficial
+    // ETAPA 5: Chamar OpenAI API usando SDK oficial
     console.log('🤖 Gerando resposta com IA...');
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
@@ -107,7 +145,7 @@ app.post('/api/chat', async (req, res) => {
 
     console.log('✅ Resposta gerada com sucesso\n');
 
-    // ETAPA 5: Retornar resposta com metadata
+    // ETAPA 6: Retornar resposta com metadata
     res.json({
       message: assistantMessage,
       metadata: {
@@ -117,7 +155,8 @@ app.post('/api/chat', async (req, res) => {
         sources: relevantDocs.map(doc => ({
           file: doc.source,
           page: doc.page
-        }))
+        })),
+        public_data_used: Object.keys(dadosPublicos)
       }
     });
 
