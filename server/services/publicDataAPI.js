@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { obterDividaPublicaFederal, formatarDividaPublicaParaRAG } from './dividaPublicaAPI.js';
+import { consultarDividaAtiva, formatarDividaAtivaParaRAG } from './dividaAtivaAPI.js';
 
 /**
  * Serviço de integração com APIs públicas brasileiras
@@ -265,6 +267,12 @@ export function formatarDadosPublicosParaRAG(dados) {
     contexto += `- Situação: ${dados.cnpj.situacao_cadastral}\n\n`;
   }
 
+  // Dívida Ativa (formatação detalhada)
+  if (dados.divida_ativa) {
+    contexto += formatarDividaAtivaParaRAG(dados.divida_ativa);
+    contexto += '\n';
+  }
+
   // Índices econômicos
   if (dados.indices && dados.indices.length > 0) {
     contexto += `📊 ÍNDICES ECONÔMICOS ATUAIS:\n`;
@@ -273,6 +281,12 @@ export function formatarDadosPublicosParaRAG(dados) {
         contexto += `- ${indice.indice}: ${indice.ultimo_valor.valor}% (${indice.ultimo_valor.data})\n`;
       }
     });
+    contexto += '\n';
+  }
+
+  // Dívida Pública (formatação detalhada)
+  if (dados.divida_publica) {
+    contexto += formatarDividaPublicaParaRAG(dados.divida_publica);
     contexto += '\n';
   }
 
@@ -286,6 +300,13 @@ export function formatarDadosPublicosParaRAG(dados) {
       });
     });
     contexto += '\n';
+  }
+
+  // Info sobre dívida ativa (sem CNPJ)
+  if (dados.info_divida_ativa) {
+    contexto += `ℹ️  CONSULTA DE DÍVIDA ATIVA:\n`;
+    contexto += `- ${dados.info_divida_ativa.descricao}\n`;
+    contexto += `- ${dados.info_divida_ativa.como_usar}\n\n`;
   }
 
   contexto += '=' .repeat(50) + '\n';
@@ -304,6 +325,9 @@ export async function buscarDadosPublicosRelevantes(mensagem) {
     const cnpjMatch = mensagem.match(/\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}/);
     if (cnpjMatch) {
       dados.cnpj = await consultarCNPJ(cnpjMatch[0]);
+
+      // Consultar dívida ativa automaticamente quando há CNPJ
+      dados.divida_ativa = consultarDividaAtiva(cnpjMatch[0]);
     }
 
     // Detectar menção a índices econômicos
@@ -333,6 +357,32 @@ export async function buscarDadosPublicosRelevantes(mensagem) {
       mensagemLower.includes('alíquota')
     ) {
       dados.simples = obterFaixasSimplesNacional();
+    }
+
+    // Detectar menção à dívida pública
+    if (
+      mensagemLower.includes('dívida pública') ||
+      mensagemLower.includes('divida publica') ||
+      mensagemLower.includes('dívida do governo') ||
+      mensagemLower.includes('dívida federal') ||
+      mensagemLower.includes('endividamento')
+    ) {
+      dados.divida_publica = obterDividaPublicaFederal();
+    }
+
+    // Detectar menção à dívida ativa (sem CNPJ específico)
+    if (
+      (mensagemLower.includes('dívida ativa') ||
+       mensagemLower.includes('divida ativa') ||
+       mensagemLower.includes('débito') ||
+       mensagemLower.includes('pendência fiscal')) &&
+      !cnpjMatch
+    ) {
+      // Retornar informações gerais sobre dívida ativa
+      dados.info_divida_ativa = {
+        descricao: 'Sistema de consulta de débitos com a União disponível',
+        como_usar: 'Informe um CNPJ para verificar pendências fiscais'
+      };
     }
 
     return dados;

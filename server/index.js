@@ -5,6 +5,7 @@ import OpenAI from 'openai';
 import { searchRelevantDocs, formatContextForPrompt, initializeVectorStore } from './services/pdfProcessor.js';
 import { buscarDadosPublicosRelevantes, formatarDadosPublicosParaRAG } from './services/publicDataAPI.js';
 import publicDataRoutes from './routes/publicDataRoutes.js';
+import dividasRoutes from './routes/dividasRoutes.js';
 
 // Carregar variáveis de ambiente (busca no diretório pai)
 import path from 'path';
@@ -29,6 +30,7 @@ app.use(express.json());
 
 // Rotas de APIs públicas
 app.use('/api/public-data', publicDataRoutes);
+app.use('/api/dividas', dividasRoutes);
 
 // Sistema de prompt especializado em tributação brasileira com RAG
 const SYSTEM_PROMPT = `Você é a TaxIA, uma assistente especializada em tributação brasileira com ACESSO A DADOS PÚBLICOS EM TEMPO REAL.
