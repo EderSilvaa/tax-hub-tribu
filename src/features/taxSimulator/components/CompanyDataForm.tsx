@@ -245,11 +245,41 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
   return (
     <TooltipProvider>
       <div className={`max-w-4xl mx-auto space-y-8 ${className}`}>
-      {/* Step Indicator */}
+      {/* Step Indicator - Otimizado para Mobile */}
       {showStepIndicator && (
         <Card className="bg-gradient-to-r from-accent/5 to-accent-subtle/5 border-accent/20">
-          <CardContent className="py-6">
-            <div className="flex items-center justify-between">
+          <CardContent className="py-4 sm:py-6">
+            {/* Mobile: Indicador compacto */}
+            <div className="sm:hidden">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                {FORM_STEPS.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`h-2 flex-1 rounded-full transition-all duration-300 ${
+                      index === currentStep
+                        ? 'bg-accent'
+                        : index < currentStep
+                        ? 'bg-green-600'
+                        : 'bg-muted'
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="text-center">
+                <Badge variant="secondary" className="text-sm">
+                  Passo {currentStep + 1} de {FORM_STEPS.length}
+                </Badge>
+                <p className="text-sm font-medium text-foreground mt-2">
+                  {FORM_STEPS[currentStep].title}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {FORM_STEPS[currentStep].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Desktop: Indicador completo */}
+            <div className="hidden sm:flex items-center justify-between">
               {FORM_STEPS.map((step, index) => {
                 const Icon = step.icon;
                 const isActive = currentStep === index;
@@ -279,7 +309,7 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                         <div className={`text-sm font-medium ${isActive ? 'text-accent' : 'text-muted-foreground'}`}>
                           {step.title}
                         </div>
-                        <div className="text-xs text-muted-foreground hidden sm:block">
+                        <div className="text-xs text-muted-foreground">
                           {step.description}
                         </div>
                       </div>
@@ -288,7 +318,7 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                     {index < FORM_STEPS.length - 1 && (
                       <div
                         className={`
-                          hidden sm:block w-20 h-0.5 mx-4 transition-colors duration-300
+                          w-20 h-0.5 mx-4 transition-colors duration-300
                           ${isCompleted ? 'bg-green-600' : 'bg-border'}
                         `}
                       />
@@ -296,12 +326,6 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                   </div>
                 );
               })}
-            </div>
-
-            <div className="mt-4 text-center">
-              <Badge variant="secondary">
-                Passo {currentStep + 1} de {FORM_STEPS.length}
-              </Badge>
             </div>
           </CardContent>
         </Card>
@@ -386,24 +410,26 @@ const CompanyDataForm: React.FC<CompanyDataFormProps> = ({
                   <div className="text-xs text-muted-foreground space-y-2">
                     <div>Informe o faturamento bruto dos últimos 12 meses.</div>
                     <div>💡 Dica: Digite apenas números (ex: 500000 para R$ 500.000)</div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <span className="text-xs">Valores comuns:</span>
-                      {[100000, 500000, 1000000, 2000000].map((value) => (
-                        <button
-                          key={value}
-                          type="button"
-                          className="text-xs px-2 py-1 bg-accent/10 text-accent rounded hover:bg-accent/20 transition-colors"
-                          onClick={() => {
-                            setValue('faturamentoAnual', value);
-                            const input = document.getElementById('faturamentoAnual') as HTMLInputElement;
-                            if (input) {
-                              input.value = formatCurrency(value);
-                            }
-                          }}
-                        >
-                          {formatCurrency(value, { compact: true })}
-                        </button>
-                      ))}
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mt-2">
+                      <span className="text-xs font-medium">Valores comuns:</span>
+                      <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
+                        {[100000, 500000, 1000000, 2000000].map((value) => (
+                          <button
+                            key={value}
+                            type="button"
+                            className="touch-target text-xs px-4 py-2 bg-accent/10 text-accent rounded-lg hover:bg-accent/20 active:scale-95 transition-all no-select font-medium"
+                            onClick={() => {
+                              setValue('faturamentoAnual', value);
+                              const input = document.getElementById('faturamentoAnual') as HTMLInputElement;
+                              if (input) {
+                                input.value = formatCurrency(value);
+                              }
+                            }}
+                          >
+                            {formatCurrency(value, { compact: true })}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>

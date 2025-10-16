@@ -1,35 +1,28 @@
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+
+  // Scroll lock quando menu está aberto
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
 
   const navigation = [
-    { name: "Início", href: "/" },
     { name: "Simulador", href: "/simulador" },
     { name: "TaxIA", href: "/taxia" },
     { name: "Sobre Nós", href: "/sobre-nos" },
     { name: "Blog", href: "/blog" },
-  ];
-
-  const services = [
-    { name: "Recuperação de Tributos", href: "/servicos/recuperacao-tributos" },
-    { name: "Isenções para Pequenas Empresas", href: "/servicos/isencoes-pequenas-empresas" },
-    { name: "Consultoria Preventiva", href: "/servicos/consultoria-preventiva" },
-    { name: "Defesa em Autuações", href: "/servicos/defesa-autuacoes" },
-    { name: "Imposto de Renda", href: "/servicos/imposto-renda" },
-    { name: "Consultoria Especializada", href: "/servicos/consultoria-especializada" },
   ];
 
   return (
@@ -68,95 +61,53 @@ const Header = () => {
                 </a>
               )
             ))}
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light">
-                Serviços
-                <ChevronDown size={14} className="ml-1" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-64 bg-background border-border">
-                {services.map((service) => (
-                  <DropdownMenuItem key={service.name} asChild>
-                    <Link
-                      to={service.href}
-                      className="cursor-pointer text-muted-foreground hover:text-foreground"
-                    >
-                      {service.name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-3">
-            <ThemeToggle />
-            <Button variant="gradient" size="sm" className="px-4 py-2 text-sm font-medium">
-              Agendar Consulta
-            </Button>
-          </div>
-
-          {/* Mobile Actions */}
-          <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-muted-foreground hover:text-foreground transition-colors p-1 hover-lift focus-ring"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 hover-lift focus-ring"
+              aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
-              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
-        {/* Clean Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-4 pt-2 pb-4 space-y-2 bg-background border-t border-border/30">
-              {navigation.map((item) => (
-                item.href.startsWith('/') ? (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ) : (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                )
-              ))}
-
-              <div className="px-2 py-2">
-                <div className="text-sm font-medium text-muted-foreground mb-2">Serviços:</div>
-                {services.map((service) => (
-                  <Link
-                    key={service.name}
-                    to={service.href}
-                    className="block px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 font-light"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {service.name}
-                  </Link>
-                ))}
-              </div>
-
-              <div className="px-2 pt-2">
-                <Button variant="gradient" size="sm" className="w-full py-2 text-sm font-medium">
-                  Agendar Consulta
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Mobile Navigation com animação suave */}
+        <div
+          id="mobile-menu"
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <nav className="px-4 pt-2 pb-4 space-y-1 bg-background border-t border-border/30">
+            {navigation.map((item) => (
+              item.href.startsWith('/') ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block px-4 py-3 text-base text-muted-foreground hover:text-foreground hover:bg-accent/5 rounded-lg transition-all duration-200 font-light active:scale-[0.98]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block px-4 py-3 text-base text-muted-foreground hover:text-foreground hover:bg-accent/5 rounded-lg transition-all duration-200 font-light active:scale-[0.98]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              )
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );

@@ -9,37 +9,43 @@ const Services = () => {
       title: "Software de Recuperação Tributária",
       description: "Plataforma inteligente que identifica automaticamente tributos pagos a maior e gera relatórios para recuperação de valores.",
       features: ["Análise automatizada", "Relatórios detalhados", "ICMS e PIS/COFINS", "Dashboard em tempo real"],
-      href: "/servicos/software-recuperacao"
+      href: "/servicos/software-recuperacao",
+      comingSoon: true
     },
     {
       title: "Sistema de Compliance Fiscal",
       description: "Software que monitora obrigações tributárias e mantém sua empresa sempre em conformidade com a legislação.",
       features: ["Calendário fiscal", "Alertas automáticos", "Controle de prazos", "Relatórios de compliance"],
-      href: "/servicos/sistema-compliance"
+      href: "/servicos/sistema-compliance",
+      comingSoon: true
     },
     {
       title: "Simulador Tributário Interativo",
       description: "Ferramenta inteligente que analisa sua empresa e compara todos os regimes tributários em tempo real, mostrando economia detalhada.",
       features: ["Cálculo em tempo real", "Comparativo completo de regimes", "Análise de economia potencial", "Recomendações personalizadas"],
-      href: "/simulador"
+      href: "/simulador",
+      comingSoon: false
     },
     {
       title: "Acompanhamento Jurídico",
       description: "Após usar nossos softwares, oferecemos acompanhamento jurídico especializado para implementar as soluções identificadas.",
       features: ["Defesa administrativa", "Recursos e contestações", "Acompanhamento processual", "Consultoria jurídica"],
-      href: "/servicos/acompanhamento-juridico"
+      href: "/servicos/acompanhamento-juridico",
+      comingSoon: true
     },
     {
       title: "Assessoria Contábil",
       description: "Serviços contábeis especializados em otimização tributária, complementando nossas soluções tecnológicas.",
       features: ["Escrituração fiscal", "Apuração de tributos", "Declarações obrigatórias", "Consultoria contábil"],
-      href: "/servicos/assessoria-contabil"
+      href: "/servicos/assessoria-contabil",
+      comingSoon: true
     },
     {
       title: "Suporte Técnico Especializado",
       description: "Equipe dedicada para auxiliar na utilização dos softwares e implementação das estratégias tributárias.",
       features: ["Treinamento de usuários", "Suporte técnico 24h", "Implementação assistida", "Atualizações constantes"],
-      href: "/servicos/suporte-tecnico"
+      href: "/servicos/suporte-tecnico",
+      comingSoon: true
     }
   ];
 
@@ -66,16 +72,23 @@ const Services = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-up">
           {services.map((service, index) => (
-            <Card 
-              key={index} 
+            <Card
+              key={index}
               className="group hover-lift cursor-pointer border-0 shadow-soft hover:shadow-glow bg-card/50 backdrop-blur-sm"
-              onClick={() => window.location.href = service.href}
+              onClick={() => !service.comingSoon && (window.location.href = service.href)}
             >
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Badge variant="glass" size="sm">
-                    Serviço {index + 1}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="glass" size="sm">
+                      Serviço {index + 1}
+                    </Badge>
+                    {service.comingSoon && (
+                      <Badge className="bg-red-500/90 text-white hover:bg-red-600 border-0 text-xs px-2 py-0.5">
+                        Em breve
+                      </Badge>
+                    )}
+                  </div>
                   <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all duration-300" />
                 </div>
                 <CardTitle className="text-xl font-sans font-semibold text-foreground group-hover:text-accent transition-colors duration-300">
@@ -97,11 +110,12 @@ const Services = () => {
                 </div>
                 
                 <div className="pt-4">
-                  <Button 
-                    variant="ghost" 
-                    className="w-full text-accent hover:text-accent hover:bg-accent/10 group-hover:bg-accent/20 transition-all duration-300"
+                  <Button
+                    variant="ghost"
+                    className="w-full text-accent hover:text-accent hover:bg-accent/10 group-hover:bg-accent/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={service.comingSoon}
                   >
-                    Saber Mais
+                    {service.comingSoon ? "Em breve" : "Saber Mais"}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </div>

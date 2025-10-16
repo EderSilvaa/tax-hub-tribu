@@ -13,21 +13,21 @@ const SobreNos = () => {
       
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="py-16 lg:py-20 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+        <section className="py-16 lg:py-20 bg-gradient-to-br from-accent/5 via-background to-accent-subtle/5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
               <Badge variant="secondary" className="mb-4">
                 Sobre Nós
               </Badge>
-              
-              <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6">
-                O Futuro do
-                <span className="text-primary"> Direito Tributário</span>
+
+              <h1 className="text-4xl lg:text-6xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-foreground via-accent to-accent-subtle bg-clip-text text-transparent">
+                  O Futuro do Direito Tributário
+                </span>
               </h1>
-              
+
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                Somos um hub inovador de direito tributário que combina expertise jurídica 
-                com altas tecnologias para revolucionar sua experiência com tributos.
+                Somos um hub inovador de direito tributário que combina <span className="text-accent font-medium">expertise jurídica</span> com <span className="text-accent font-medium">altas tecnologias</span> para revolucionar sua experiência com tributos.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -67,23 +67,23 @@ const SobreNos = () => {
               
               <div className="grid grid-cols-2 gap-4">
                 <Card className="p-6 text-center">
-                  <Users className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-semibold text-foreground mb-2">500+</h3>
+                  <Users className="w-8 h-8 text-accent mx-auto mb-3" />
+                  <h3 className="font-semibold bg-gradient-to-r from-accent to-accent-subtle bg-clip-text text-transparent mb-2">500+</h3>
                   <p className="text-sm text-muted-foreground">Clientes Atendidos</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <Award className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-semibold text-foreground mb-2">15+</h3>
+                  <Award className="w-8 h-8 text-accent mx-auto mb-3" />
+                  <h3 className="font-semibold bg-gradient-to-r from-accent to-accent-subtle bg-clip-text text-transparent mb-2">15+</h3>
                   <p className="text-sm text-muted-foreground">Anos de Experiência</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <TrendingUp className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-semibold text-foreground mb-2">R$ 50M+</h3>
+                  <TrendingUp className="w-8 h-8 text-accent mx-auto mb-3" />
+                  <h3 className="font-semibold bg-gradient-to-r from-accent to-accent-subtle bg-clip-text text-transparent mb-2">R$ 50M+</h3>
                   <p className="text-sm text-muted-foreground">Recuperados em Tributos</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <Clock className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-semibold text-foreground mb-2">24/7</h3>
+                  <Clock className="w-8 h-8 text-accent mx-auto mb-3" />
+                  <h3 className="font-semibold bg-gradient-to-r from-accent to-accent-subtle bg-clip-text text-transparent mb-2">24/7</h3>
                   <p className="text-sm text-muted-foreground">Suporte Digital</p>
                 </Card>
               </div>
@@ -107,12 +107,12 @@ const SobreNos = () => {
             <div className="grid md:grid-cols-3 gap-8">
               <Card className="p-6 hover:shadow-lg transition-shadow">
                 <CardContent className="p-0">
-                  <Zap className="w-12 h-12 text-primary mb-4" />
+                  <Zap className="w-12 h-12 text-accent mb-4" />
                   <h3 className="text-xl font-semibold text-foreground mb-3">
                     Tecnologia de Ponta
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Utilizamos inteligência artificial, automação e analytics 
+                    Utilizamos inteligência artificial, automação e analytics
                     avançados para otimizar cada processo tributário.
                   </p>
                 </CardContent>
@@ -120,12 +120,12 @@ const SobreNos = () => {
 
               <Card className="p-6 hover:shadow-lg transition-shadow">
                 <CardContent className="p-0">
-                  <Shield className="w-12 h-12 text-primary mb-4" />
+                  <Shield className="w-12 h-12 text-accent mb-4" />
                   <h3 className="text-xl font-semibold text-foreground mb-3">
                     Segurança Jurídica
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Todas as nossas soluções são fundamentadas em sólida 
+                    Todas as nossas soluções são fundamentadas em sólida
                     base jurídica e compliance regulatório.
                   </p>
                 </CardContent>
@@ -133,12 +133,12 @@ const SobreNos = () => {
 
               <Card className="p-6 hover:shadow-lg transition-shadow">
                 <CardContent className="p-0">
-                  <Users className="w-12 h-12 text-primary mb-4" />
+                  <Users className="w-12 h-12 text-accent mb-4" />
                   <h3 className="text-xl font-semibold text-foreground mb-3">
                     Atendimento Humanizado
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Tecnologia potencializa, mas pessoas transformam. 
+                    Tecnologia potencializa, mas pessoas transformam.
                     Nossa equipe está sempre ao seu lado.
                   </p>
                 </CardContent>
@@ -162,8 +162,8 @@ const SobreNos = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">1</span>
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-accent">1</span>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   Análise Digital
@@ -174,8 +174,8 @@ const SobreNos = () => {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">2</span>
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-accent">2</span>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   Estratégia Personalizada
@@ -186,8 +186,8 @@ const SobreNos = () => {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">3</span>
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-accent">3</span>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   Execução Automatizada
@@ -198,8 +198,8 @@ const SobreNos = () => {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">4</span>
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-accent">4</span>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   Monitoramento Contínuo

@@ -46,14 +46,16 @@ const Blog = () => {
       
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="py-16 lg:py-20 bg-gradient-to-b from-primary/5 to-background">
+        <section className="py-16 lg:py-20 bg-gradient-to-b from-accent/5 to-background">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Blog Tributário
+            <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-foreground via-accent to-accent-subtle bg-clip-text text-transparent">
+                Blog Tributário
+              </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Mantenha-se atualizado com as últimas novidades, mudanças na legislação 
-              e dicas práticas sobre tributos e planejamento fiscal.
+              Mantenha-se atualizado com as últimas novidades, mudanças na legislação
+              e dicas práticas sobre <span className="text-accent font-medium">tributos e planejamento fiscal</span>.
             </p>
           </div>
         </section>

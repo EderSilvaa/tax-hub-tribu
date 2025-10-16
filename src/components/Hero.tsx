@@ -3,17 +3,23 @@ import heroImage from "@/assets/hero-law-office.jpg";
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center gradient-subtle relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden gradient-animated">
+      {/* Mesh gradient overlay */}
+      <div className="absolute inset-0 mesh-gradient" />
+
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 grid-pattern opacity-20" />
+
       {/* Modern background with glass effect */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
         style={{ backgroundImage: `url(${heroImage})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/80 to-background/90" />
-      
+
       {/* Floating elements for modern design */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-accent/10 rounded-full blur-3xl animate-pulse-glow" />
       <div className="absolute bottom-20 right-10 w-48 h-48 bg-accent-subtle/10 rounded-full blur-3xl animate-pulse-glow" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse-glow" />
       
       {/* Modern, clean content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
