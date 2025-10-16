@@ -113,6 +113,8 @@ app.post('/chat', async (req, res) => {
       return res.status(400).json({ error: 'Messages array is required' });
     }
 
+    console.log(`💬 Nova mensagem recebida (${messages.length} mensagens no histórico)`);
+
     // Construir mensagens com sistema
     const systemMessage = {
       role: 'system',
@@ -130,16 +132,32 @@ app.post('/chat', async (req, res) => {
 
     const response = completion.choices[0].message;
 
+    console.log('✅ Resposta gerada com sucesso');
+
     res.json({
-      id: completion.id,
-      role: response.role,
       content: response.content,
+      role: response.role,
+      id: completion.id,
       created: completion.created,
       model: completion.model
     });
 
   } catch (error) {
-    console.error('Error in chat endpoint:', error);
+    console.error('❌ Error in chat endpoint:', error);
+
+    // Error handling robusto
+    if (error.status === 401) {
+      return res.status(500).json({
+        error: 'Erro de autenticação com OpenAI'
+      });
+    }
+
+    if (error.status === 429) {
+      return res.status(429).json({
+        error: 'Limite de requisições atingido'
+      });
+    }
+
     res.status(500).json({
       error: 'Error processing chat request',
       message: error.message

@@ -16,8 +16,10 @@ interface ChatResponse {
   };
 }
 
-// URL do servidor backend
-const API_URL = 'http://localhost:3001/api/chat';
+// URL do servidor backend - usa variável de ambiente ou detecta automaticamente
+const API_URL = import.meta.env.PROD
+  ? '/api/chat'  // Em produção, usa URL relativa (Vercel rewrites)
+  : 'http://localhost:3001/api/chat';  // Em desenvolvimento, usa servidor local
 
 export const useTaxAI = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -37,11 +39,17 @@ export const useTaxAI = () => {
     setError(null);
 
     try {
-      // Preparar histórico da conversa para contexto
-      const history = messages.map(msg => ({
-        role: msg.role,
-        content: msg.content
-      }));
+      // Preparar histórico completo da conversa incluindo a nova mensagem
+      const allMessages = [
+        ...messages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        })),
+        {
+          role: 'user',
+          content: content
+        }
+      ];
 
       // Chamar backend Express com timeout
       const controller = new AbortController();
@@ -53,8 +61,7 @@ export const useTaxAI = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: content,
-          history
+          messages: allMessages
         }),
         signal: controller.signal
       });
@@ -66,11 +73,12 @@ export const useTaxAI = () => {
         throw new Error(errorData.error || 'Erro ao processar mensagem');
       }
 
-      const data: ChatResponse = await response.json();
+      const data = await response.json();
 
+      // O servidor retorna { role, content, id, created, model }
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.message,
+        content: data.content || data.message, // Suporta ambos os formatos
         role: 'assistant',
         timestamp: new Date()
       };
