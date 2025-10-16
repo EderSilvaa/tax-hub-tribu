@@ -6,37 +6,17 @@ import { Calendar, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Blog = () => {
-  // Placeholder blog posts - these would come from a CMS or database in a real app
+  // Blog posts
   const blogPosts = [
     {
       id: 1,
-      title: "Principais Mudanças na Legislação Tributária de 2024",
-      excerpt: "Entenda as principais alterações que impactam empresas e pessoas físicas neste ano.",
-      date: "2024-03-15",
-      author: "SILVA Tributário",
-      category: "Legislação",
-      readTime: "5 min",
-      slug: "legislacao-tributaria-2024"
-    },
-    {
-      id: 2,
-      title: "Como Recuperar Tributos Pagos Indevidamente",
-      excerpt: "Guia completo sobre o processo de recuperação de tributos e os documentos necessários.",
-      date: "2024-03-10",
-      author: "SILVA Tributário",
-      category: "Recuperação",
+      title: "O Shape É Dele, Mas a Receita Quer a Parte: Como o Leão Vai Tributar o Ramon Dino",
+      excerpt: "Ramon Dino conquistou o Mr. Olympia, mas enquanto o Brasil comemorava, a Receita Federal já calculava quanto aquele título valia em impostos.",
+      date: "2024-10-16",
+      author: "Eder Silva",
+      category: "Tributação Internacional",
       readTime: "8 min",
-      slug: "recuperacao-tributos"
-    },
-    {
-      id: 3,
-      title: "Planejamento Tributário para Pequenas Empresas",
-      excerpt: "Estratégias legais para reduzir a carga tributária e otimizar os resultados da sua empresa.",
-      date: "2024-03-05",
-      author: "SILVA Tributário",
-      category: "Planejamento",
-      readTime: "6 min",
-      slug: "planejamento-tributario"
+      slug: "ramon-dino-tributacao"
     }
   ];
 
@@ -50,12 +30,12 @@ const Blog = () => {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
               <span className="bg-gradient-to-r from-foreground via-accent to-accent-subtle bg-clip-text text-transparent">
-                Blog Tributário
+                Coluna
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Mantenha-se atualizado com as últimas novidades, mudanças na legislação
-              e dicas práticas sobre <span className="text-accent font-medium">tributos e planejamento fiscal</span>.
+              Análises autorais sobre tributação, economia e o impacto dos impostos na vida real.
+              <span className="text-accent font-medium"> Direto ao ponto, sem juridiquês.</span>
             </p>
           </div>
         </section>
@@ -63,10 +43,10 @@ const Blog = () => {
         {/* Blog Posts Grid */}
         <section className="py-16 lg:py-20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="max-w-2xl mx-auto">
               {blogPosts.map((post) => (
                 <Link key={post.id} to={`/blog/${post.slug}`}>
-                  <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
+                  <Card className="group hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full">
                   <CardHeader>
                     <div className="flex items-center gap-2 mb-3">
                       <Badge variant="secondary" className="text-xs">
@@ -76,12 +56,12 @@ const Blog = () => {
                         {post.readTime}
                       </span>
                     </div>
-                    <CardTitle className="group-hover:text-primary transition-colors duration-200 line-clamp-2">
+                    <CardTitle className="text-2xl group-hover:text-accent transition-colors duration-200">
                       {post.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                    <p className="text-muted-foreground mb-6 text-base leading-relaxed">
                       {post.excerpt}
                     </p>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">

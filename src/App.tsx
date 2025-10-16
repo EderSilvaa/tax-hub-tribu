@@ -17,6 +17,7 @@ import Blog from "./pages/Blog";
 import LegislacaoTributaria2024 from "./pages/blog/LegislacaoTributaria2024";
 import RecuperacaoTributosBlog from "./pages/blog/RecuperacaoTributos";
 import PlanejamentoTributario from "./pages/blog/PlanejamentoTributario";
+import RamonDinoTributacao from "./pages/blog/RamonDinoTributacao";
 import SobreNos from "./pages/SobreNos";
 import Simulador from "./pages/Simulador";
 
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/taxia" element={<TaxIA />} />
           <Route path="/sobre-nos" element={<SobreNos />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/ramon-dino-tributacao" element={<RamonDinoTributacao />} />
           <Route path="/blog/legislacao-tributaria-2024" element={<LegislacaoTributaria2024 />} />
           <Route path="/blog/recuperacao-tributos" element={<RecuperacaoTributosBlog />} />
           <Route path="/blog/planejamento-tributario" element={<PlanejamentoTributario />} />
