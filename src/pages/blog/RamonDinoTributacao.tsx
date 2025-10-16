@@ -41,15 +41,16 @@ const RamonDinoTributacao = () => {
               </span>
             </h1>
 
-            <div className="flex items-center gap-4 pt-4">
+            <div className="flex items-center gap-4 pt-6">
               <img
                 src={author.avatar}
                 alt={author.name}
-                className="w-16 h-16 rounded-full object-cover"
+                className="w-20 h-20 rounded-full object-cover ring-2 ring-accent/20"
               />
-              <div>
-                <p className="text-sm text-muted-foreground">Por</p>
-                <p className="text-base font-medium text-foreground">{author.name}</p>
+              <div className="flex flex-col gap-1">
+                <p className="text-sm text-muted-foreground font-medium">Por</p>
+                <p className="text-lg font-semibold text-foreground">{author.name}</p>
+                <p className="text-sm text-muted-foreground">{author.role}</p>
               </div>
             </div>
           </div>
@@ -58,13 +59,13 @@ const RamonDinoTributacao = () => {
         {/* Article Content */}
         <div className="grid grid-cols-12 relative">
           <div className="col-span-12 lg:col-start-3 lg:col-span-8">
-            <article className="prose dark:prose-invert max-w-none prose-headings:scroll-mt-8 prose-headings:font-semibold prose-a:no-underline prose-headings:tracking-tight prose-headings:text-balance prose-p:tracking-tight prose-p:text-balance prose-lg p-6">
+            <article className="prose dark:prose-invert max-w-none prose-headings:scroll-mt-8 prose-headings:font-bold prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent-subtle prose-headings:tracking-tight prose-headings:text-balance prose-p:tracking-tight prose-p:text-balance prose-p:leading-relaxed prose-lg md:prose-xl p-6 md:p-8 lg:p-12">
 
-              <h2>O Atleta Como Empresa</h2>
-
-              <p>
-                Ramon Dino acabou de fazer história. Primeiro brasileiro a conquistar o título do Mr. Olympia na categoria Classic Physique, troféu na mão, foto com a bandeira, aquele momento de glória que o país inteiro esperava. Mas enquanto a galera comemora nas redes sociais, tem uma entidade que já está de olho no prêmio de 100 mil dólares: a Receita Federal.
+              <p className="text-xl md:text-2xl !leading-relaxed text-muted-foreground italic border-l-4 border-accent pl-6 my-8">
+                Ramon Dino acabou de fazer história. Primeiro brasileiro a conquistar o título do Mr. Olympia na categoria Classic Physique. Mas enquanto a galera comemora, tem uma entidade já de olho no prêmio: a Receita Federal.
               </p>
+
+              <h2 className="!mt-12 !mb-6">O Atleta Como Empresa</h2>
 
               <p>
                 Porque ser atleta profissional hoje não é só sobre treino e dieta. É sobre entender que você virou uma empresa. Ramon não vive só de troféus — vive de contratos, patrocínios, publis no Instagram, venda de planilhas e royalties de suplementos. Tudo isso gera renda. E renda, meu amigo, é algo que o Leão adora farejar.
@@ -74,7 +75,7 @@ const RamonDinoTributacao = () => {
                 O campeonato foi nos Estados Unidos, o prêmio veio em dólar, mas isso não muda nada. O artigo 43, § 1º do Código Tributário Nacional (incluído pela Lei Complementar nº 104/2001) é cristalino: a incidência do imposto independe da localização, da nacionalidade da fonte e da origem do rendimento. Se você é residente brasileiro, sua renda mundial é tributável aqui. Pode ter ganhado em Las Vegas, Dubai ou na Lua — o imposto é pago em Brasília.
               </p>
 
-              <h2>O labirinto tributário do atleta internacional</h2>
+              <h2 className="!mt-16 !mb-6">O labirinto tributário do atleta internacional</h2>
 
               <p>
                 Aqui é onde a coisa fica tecnicamente complicada. Ramon recebeu 100 mil dólares nos Estados Unidos. Primeiro, os americanos já retêm 30% na fonte (isso mesmo, 30 mil dólares ficam lá) porque Brasil e EUA não têm tratado de bitributação. Sobram 70 mil dólares que chegam de fato na conta dele.
@@ -92,18 +93,43 @@ const RamonDinoTributacao = () => {
                 E aqui vem o golpe: existe sim um mecanismo de compensação (o Ato Declaratório SRF nº 28/2000 permite deduzir o imposto pago nos EUA). Mas tem um detalhe cruel: essa compensação só vale até o limite do imposto brasileiro. Os 30 mil dólares retidos pelos americanos valem 168 mil reais na conversão. Como o Brasil cobra "apenas" 154 mil reais, Ramon pode compensar esse valor todo. Mas os 14 mil reais de diferença? Perdidos. Não voltam, não podem ser usados em anos futuros, não servem pra nada.
               </p>
 
-              <p>
-                Resultado final da operação:
-              </p>
-
-              <ul>
-                <li><strong>Prêmio bruto:</strong> US$ 100.000 (R$ 560.000)</li>
-                <li><strong>Retido nos EUA:</strong> US$ 30.000 (R$ 168.000)</li>
-                <li><strong>Imposto devido no Brasil:</strong> R$ 154.000</li>
-                <li><strong>Compensação permitida:</strong> R$ 154.000</li>
-                <li><strong>Perda permanente por excesso:</strong> R$ 14.000</li>
-                <li><strong>Valor líquido real:</strong> R$ 392.000 (70% do prêmio)</li>
-              </ul>
+              <div className="not-prose my-8">
+                <div className="bg-accent/5 border-2 border-accent/30 rounded-xl p-6 md:p-8">
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+                    <span className="text-3xl">💰</span>
+                    Resultado Final da Operação
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center pb-3 border-b border-border/50">
+                      <span className="text-muted-foreground">Prêmio bruto</span>
+                      <span className="font-semibold text-foreground">US$ 100.000 (R$ 560.000)</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b border-border/50">
+                      <span className="text-muted-foreground">Retido nos EUA</span>
+                      <span className="font-semibold text-red-500">- US$ 30.000 (R$ 168.000)</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b border-border/50">
+                      <span className="text-muted-foreground">Imposto devido no Brasil</span>
+                      <span className="font-semibold text-red-500">- R$ 154.000</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b border-border/50">
+                      <span className="text-muted-foreground">Compensação permitida</span>
+                      <span className="font-semibold text-green-500">+ R$ 154.000</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b border-border/50">
+                      <span className="text-muted-foreground">Perda permanente por excesso</span>
+                      <span className="font-semibold text-red-500">- R$ 14.000</span>
+                    </div>
+                    <div className="flex justify-between items-center pt-4 border-t-2 border-accent">
+                      <span className="text-lg font-bold text-foreground">Valor líquido real</span>
+                      <span className="text-2xl font-bold text-accent">R$ 392.000</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground text-center pt-2">
+                      Apenas 70% do prêmio original
+                    </p>
+                  </div>
+                </div>
+              </div>
 
               <p>
                 Na prática, Ramon paga uma alíquota efetiva de 30% por conta da retenção americana, sendo que a diferença entre o que os EUA pegaram (30%) e o que o Brasil cobraria (27,5%) vira prejuízo puro.
@@ -125,7 +151,7 @@ const RamonDinoTributacao = () => {
                 E essa desconfiança não é só paranoia — ela virou ciência de dados.
               </p>
 
-              <h2>A máquina de vigilância fiscal</h2>
+              <h2 className="!mt-16 !mb-6">A máquina de vigilância fiscal</h2>
 
               <p>
                 Porque justamente pra pegar casos como o do Ramon (atleta que ganha em dólar, recebe de fora, movimenta valores atípicos) a Receita Federal decidiu turbinar a fiscalização com inteligência artificial desde 2024. O sistema, batizado de RFB Analytics, cruza dados bancários, movimentações de PIX, postagens em redes sociais e transações internacionais.
@@ -163,7 +189,7 @@ const RamonDinoTributacao = () => {
                 E o mais irônico de tudo? O mesmo governo que usa o atleta pra fazer marketing esportivo e postar "orgulho nacional" no Twitter é o mesmo que vai tributar o troféu antes da tinta da medalha secar.
               </p>
 
-              <h2>O paradoxo brasileiro</h2>
+              <h2 className="!mt-16 !mb-6">O paradoxo brasileiro</h2>
 
               <p>
                 Vamos deixar claro: não se trata de defender que atletas não devam pagar impostos. Óbvio que devem. A questão é como esse imposto é cobrado.
@@ -193,11 +219,15 @@ const RamonDinoTributacao = () => {
                 A vitória de Ramon Dino foi construída com disciplina, sacrifício e anos de investimento. Que ele pague seus impostos, sim. Mas que o sistema pelo menos reconheça a diferença entre sucesso e sonegação antes de tratá-los da mesma forma.
               </p>
 
-              <p>
-                O corpo é dele. O imposto é justo. Mas a burocracia? Essa sim precisa de um shape novo.
-              </p>
+              <div className="not-prose my-12">
+                <div className="bg-gradient-to-br from-accent/10 to-accent/5 border-l-4 border-accent rounded-r-xl p-8">
+                  <p className="text-xl md:text-2xl font-semibold text-foreground leading-relaxed">
+                    O corpo é dele. O imposto é justo. Mas a burocracia? Essa sim precisa de um shape novo.
+                  </p>
+                </div>
+              </div>
 
-              <hr />
+              <hr className="!my-12 border-border/50" />
 
               <div className="not-prose">
                 <div className="bg-accent/5 border border-accent/20 rounded-lg p-6 mt-8">
