@@ -1,8 +1,23 @@
 import OpenAI from 'openai';
+import { OpenAIEmbeddings } from '@langchain/openai';
+import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
+import { createClient } from '@supabase/supabase-js';
 
 // Inicializar OpenAI Client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+});
+
+// Inicializar Supabase Client
+const supabaseClient = createClient(
+  process.env.VITE_SUPABASE_URL,
+  process.env.VITE_SUPABASE_ANON_KEY
+);
+
+// Inicializar Embeddings
+const embeddings = new OpenAIEmbeddings({
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: 'text-embedding-3-small',
 });
 
 // Sistema de prompt especializado em tributação brasileira
@@ -103,10 +118,57 @@ export default async function handler(req, res) {
 
     console.log(`💬 Nova mensagem recebida (${messages.length} mensagens no histórico)`);
 
-    // Construir mensagens com sistema
+    // Pegar a última mensagem do usuário para busca RAG
+    const lastUserMessage = messages[messages.length - 1];
+    const userQuery = lastUserMessage?.content || '';
+
+    // ETAPA 1: Buscar documentos relevantes (RAG) no Supabase
+    let ragContext = '';
+    let sources = [];
+
+    if (userQuery) {
+      try {
+        console.log('🔍 Buscando documentos relevantes...');
+
+        const vectorStore = new SupabaseVectorStore(embeddings, {
+          client: supabaseClient,
+          tableName: 'documents',
+          queryName: 'match_documents',
+        });
+
+        const relevantDocs = await vectorStore.similaritySearch(userQuery, 4);
+
+        if (relevantDocs && relevantDocs.length > 0) {
+          console.log(`✓ ${relevantDocs.length} documentos encontrados`);
+
+          const contextParts = relevantDocs.map(doc => doc.pageContent);
+          ragContext = `
+
+CONTEXTO RELEVANTE DOS DOCUMENTOS:
+==================================
+${contextParts.join('\n\n---\n\n')}
+==================================
+
+Use as informações acima para responder à pergunta do usuário de forma natural e fluida, integrando o conhecimento organicamente sem citar fontes.
+`;
+
+          sources = relevantDocs.map(doc => ({
+            file: doc.metadata?.source || 'Desconhecido',
+            page: doc.metadata?.page || 'N/A'
+          }));
+        }
+      } catch (ragError) {
+        console.error('⚠️ Erro ao buscar documentos RAG:', ragError.message);
+        // Continua sem RAG em caso de erro
+      }
+    }
+
+    // ETAPA 2: Construir mensagens com sistema + RAG
+    const systemPromptWithContext = SYSTEM_PROMPT + ragContext;
+
     const systemMessage = {
       role: 'system',
-      content: SYSTEM_PROMPT
+      content: systemPromptWithContext
     };
 
     const completion = await openai.chat.completions.create({
@@ -127,7 +189,8 @@ export default async function handler(req, res) {
       role: response.role,
       id: completion.id,
       created: completion.created,
-      model: completion.model
+      model: completion.model,
+      sources: sources.length > 0 ? sources : undefined
     });
 
   } catch (error) {
