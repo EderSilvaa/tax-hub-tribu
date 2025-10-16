@@ -41,13 +41,16 @@ const RamonDinoTributacao = () => {
               </span>
             </h1>
 
-            <p className="text-xl text-muted-foreground tracking-tight text-balance max-w-3xl">
-              Ramon Dino conquistou o Mr. Olympia, mas enquanto o Brasil comemorava,
-              a Receita Federal já calculava quanto aquele título valia em impostos.
-            </p>
-
-            <div className="pt-2">
-              <AuthorCard author={author} />
+            <div className="flex items-center gap-4 pt-4">
+              <img
+                src={author.avatar}
+                alt={author.name}
+                className="w-16 h-16 rounded-full object-cover"
+              />
+              <div>
+                <p className="text-sm text-muted-foreground">Por</p>
+                <p className="text-base font-medium text-foreground">{author.name}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -57,125 +60,141 @@ const RamonDinoTributacao = () => {
           <div className="col-span-12 lg:col-start-3 lg:col-span-8">
             <article className="prose dark:prose-invert max-w-none prose-headings:scroll-mt-8 prose-headings:font-semibold prose-a:no-underline prose-headings:tracking-tight prose-headings:text-balance prose-p:tracking-tight prose-p:text-balance prose-lg p-6">
 
-              <p className="lead">
-                Ramon Dino subiu no palco do Mr. Olympia, levantou o troféu e o Brasil inteiro vibrou.
-                Enquanto a galera comemorava o shape, a Receita Federal já calculava quanto aquele bíceps
-                valia em reais. Porque sim, o Leão também assiste o campeonato — e ele não perdoa nem o pump.
-              </p>
-
               <h2>O Atleta Como Empresa</h2>
 
               <p>
-                Ser atleta profissional hoje é basicamente ser uma empresa ambulante. Ramon não vive só de troféus,
-                mas de contratos, patrocínios, publicidade, venda de produtos e royalties de suplementos.
-                Tudo isso é rendimento tributável. E como o campeonato aconteceu fora do país, o prêmio foi pago
-                em dólar, mas continua sendo renda tributável no Brasil.
+                Ramon Dino acabou de fazer história. Primeiro brasileiro a conquistar o título do Mr. Olympia na categoria Classic Physique, troféu na mão, foto com a bandeira, aquele momento de glória que o país inteiro esperava. Mas enquanto a galera comemora nas redes sociais, tem uma entidade que já está de olho no prêmio de 100 mil dólares: a Receita Federal.
               </p>
 
               <p>
-                É o que diz o <strong>artigo 43 do Código Tributário Nacional</strong>: a renda mundial de um
-                residente brasileiro é tributável aqui. Ou seja, mesmo que o cheque venha de Las Vegas,
-                o imposto é pago em Brasília.
-              </p>
-
-              <h2>A Conta do Título Mundial</h2>
-
-              <p>
-                O prêmio de <strong>50 mil dólares</strong>, convertido, dá mais ou menos 280 mil reais.
-                Com a alíquota máxima de 27,5%, isso significa que quase <strong>77 mil reais</strong> do
-                título mundial vão direto pro bolso do governo. E isso sem contar conversão cambial,
-                contribuições e as outras mordidas que o sistema adora dar.
-              </p>
-
-              <blockquote>
-                <p>
-                  O problema não é o Ramon ganhar. O problema é o quanto ele precisa entender de tributação
-                  pra não perder depois.
-                </p>
-              </blockquote>
-
-              <p>
-                E isso vale pra qualquer atleta, influenciador ou profissional que vive de performance.
-                Enquanto nos Estados Unidos atletas podem deduzir despesas com nutrição, viagens e marketing,
-                aqui o brasileiro que tentar abater o whey protein na declaração corre o risco de cair na
-                malha fina. Lá o imposto entende o esforço. Aqui, ele pune o sucesso.
-              </p>
-
-              <h2>A Receita Está Ficando Mais Esperta</h2>
-
-              <p>
-                A situação fica mais interessante quando a gente lembra que a Receita Federal está ficando
-                mais esperta. Desde 2024, o órgão vem usando <strong>inteligência artificial</strong> pra
-                cruzar dados bancários, PIX, redes sociais e movimentações financeiras.
+                Porque ser atleta profissional hoje não é só sobre treino e dieta. É sobre entender que você virou uma empresa. Ramon não vive só de troféus — vive de contratos, patrocínios, publis no Instagram, venda de planilhas e royalties de suplementos. Tudo isso gera renda. E renda, meu amigo, é algo que o Leão adora farejar.
               </p>
 
               <p>
-                O projeto, chamado <strong>RFB Analytics</strong>, já ajudou a identificar mais de
-                <strong>11 bilhões de reais</strong> em esquemas de sonegação. Agora imagine um atleta
-                que ganha prêmios no exterior, recebe patrocínios digitais e ainda vende e-books com
-                treinos online. O algoritmo conecta tudo isso antes mesmo do assessor contábil perceber
-                que precisa declarar.
+                O campeonato foi nos Estados Unidos, o prêmio veio em dólar, mas isso não muda nada. O artigo 43, § 1º do Código Tributário Nacional (incluído pela Lei Complementar nº 104/2001) é cristalino: a incidência do imposto independe da localização, da nacionalidade da fonte e da origem do rendimento. Se você é residente brasileiro, sua renda mundial é tributável aqui. Pode ter ganhado em Las Vegas, Dubai ou na Lua — o imposto é pago em Brasília.
               </p>
 
-              <h2>O Problema da Transparência</h2>
+              <h2>O labirinto tributário do atleta internacional</h2>
 
               <p>
-                O problema é que ninguém sabe exatamente como esses algoritmos decidem quem é "suspeito".
-                O contribuinte é marcado por "padrões atípicos", mas ninguém explica qual é o padrão típico
-                pra um campeão mundial. Essa falta de transparência é perigosa: um simples erro de leitura
-                pode transformar um medalhista em alvo de investigação.
+                Aqui é onde a coisa fica tecnicamente complicada. Ramon recebeu 100 mil dólares nos Estados Unidos. Primeiro, os americanos já retêm 30% na fonte (isso mesmo, 30 mil dólares ficam lá) porque Brasil e EUA não têm tratado de bitributação. Sobram 70 mil dólares que chegam de fato na conta dele.
               </p>
 
               <p>
-                O Brasil ainda trata quem ganha dinheiro fora do padrão como se fosse um potencial sonegador.
-                O sistema tributário não premia quem exporta talento, e sim quem se encaixa na planilha.
-              </p>
-
-              <h2>O Paradoxo do Sucesso</h2>
-
-              <p>
-                Ramon Dino representa isso perfeitamente: o cara colocou o país no topo do mundo, mas agora
-                vai ter que lidar com um labirinto de obrigações fiscais internacionais. Um erro de código
-                na DARF pode custar mais do que uma preparação pro Olympia.
+                Mas a história não acaba aí. Quando Ramon for declarar esse prêmio no Brasil, ele precisa usar o carnê-leão, aquele sistema de recolhimento mensal obrigatório para rendimentos do exterior. O valor deve ser informado na ficha "Rendimentos Tributáveis Recebidos de Pessoa Física/Exterior", com conversão usando a cotação do Banco Central do último dia útil da primeira quinzena do mês anterior ao recebimento.
               </p>
 
               <p>
-                E o mais irônico: o mesmo governo que exalta o atleta no marketing esportivo é o que vai
-                tributar o troféu antes mesmo do brilho da medalha apagar.
-              </p>
-
-              <blockquote>
-                <p>
-                  O caso de Ramon não é só sobre academia. É sobre um país que ainda não sabe lidar com
-                  o sucesso financeiro dos seus cidadãos.
-                </p>
-              </blockquote>
-
-              <h2>A Reflexão Necessária</h2>
-
-              <p>
-                O Leão pode ter ganhado inteligência artificial e um novo visual digital, mas o olhar
-                continua o mesmo: fiscalizar primeiro, entender depois. Enquanto isso, atletas viram PJs,
-                criadores viram empresas, e o brasileiro médio tenta sobreviver sem ser devorado por um
-                algoritmo.
+                Vamos aos números reais. Assumindo uma cotação de R$ 5,60 por dólar (próxima da atual), os 100 mil dólares viram 560 mil reais na declaração brasileira. Sobre esse valor total, aplica-se a tabela progressiva, com alíquota máxima de 27,5%. O que dá 154 mil reais de imposto devido ao Brasil.
               </p>
 
               <p>
-                No fim das contas, o corpo é dele. Mas o imposto é coletivo.
-              </p>
-
-              <h2>Conclusão</h2>
-
-              <p>
-                Se o Brasil quer ser potência esportiva e digital, precisa aprender a tributar com
-                inteligência, não com instinto predatório. A vitória de Ramon Dino é sobre disciplina,
-                suor e foco. Mas também deveria nos fazer pensar sobre o direito de crescer sem medo
-                de ser multado.
+                E aqui vem o golpe: existe sim um mecanismo de compensação (o Ato Declaratório SRF nº 28/2000 permite deduzir o imposto pago nos EUA). Mas tem um detalhe cruel: essa compensação só vale até o limite do imposto brasileiro. Os 30 mil dólares retidos pelos americanos valem 168 mil reais na conversão. Como o Brasil cobra "apenas" 154 mil reais, Ramon pode compensar esse valor todo. Mas os 14 mil reais de diferença? Perdidos. Não voltam, não podem ser usados em anos futuros, não servem pra nada.
               </p>
 
               <p>
-                O Leão pode até querer sua parte no shape, mas que pelo menos reconheça o esforço que
-                construiu o troféu.
+                Resultado final da operação:
+              </p>
+
+              <ul>
+                <li><strong>Prêmio bruto:</strong> US$ 100.000 (R$ 560.000)</li>
+                <li><strong>Retido nos EUA:</strong> US$ 30.000 (R$ 168.000)</li>
+                <li><strong>Imposto devido no Brasil:</strong> R$ 154.000</li>
+                <li><strong>Compensação permitida:</strong> R$ 154.000</li>
+                <li><strong>Perda permanente por excesso:</strong> R$ 14.000</li>
+                <li><strong>Valor líquido real:</strong> R$ 392.000 (70% do prêmio)</li>
+              </ul>
+
+              <p>
+                Na prática, Ramon paga uma alíquota efetiva de 30% por conta da retenção americana, sendo que a diferença entre o que os EUA pegaram (30%) e o que o Brasil cobraria (27,5%) vira prejuízo puro.
+              </p>
+
+              <p>
+                Pra piorar: ele não pode deduzir nada das despesas. Nos Estados Unidos, um atleta deduz suplementação, nutricionista, preparador físico, passagens, hospedagem em competições. Tudo vira custo operacional. Aqui no Brasil? Tenta abater o whey protein e a creatina na declaração e vai direto pra malha fina. O sistema trata o atleta como se ele ganhasse um prêmio de loteria, não como um profissional que investiu anos de trabalho e dinheiro pra chegar lá.
+              </p>
+
+              <p>
+                E se o Ramon errar algum código na DARF, esquecer de converter pela cotação certa, ou não declarar no mês correto? Multa de 0,33% ao dia (limitada a 20%) e mais 75% do valor do imposto devido por omissão de rendimentos. Um erro de preenchimento pode custar mais caro que a preparação inteira pro campeonato.
+              </p>
+
+              <p>
+                Enquanto nos Estados Unidos um atleta pode deduzir despesas com nutricionista, suplementação, viagens pra competições e até marketing pessoal, aqui o brasileiro que tentar abater o whey protein na declaração corre sério risco de cair na malha fina. Lá o sistema entende que essas despesas fazem parte do trabalho. Aqui, o sistema suspeita de tudo.
+              </p>
+
+              <p>
+                E essa desconfiança não é só paranoia — ela virou ciência de dados.
+              </p>
+
+              <h2>A máquina de vigilância fiscal</h2>
+
+              <p>
+                Porque justamente pra pegar casos como o do Ramon (atleta que ganha em dólar, recebe de fora, movimenta valores atípicos) a Receita Federal decidiu turbinar a fiscalização com inteligência artificial desde 2024. O sistema, batizado de RFB Analytics, cruza dados bancários, movimentações de PIX, postagens em redes sociais e transações internacionais.
+              </p>
+
+              <p>
+                E não é conversa. O projeto já identificou mais de 11 bilhões de reais em esquemas de sonegação só no primeiro ano de operação. Encontrou uma fraude de 700 milhões em lavagem de dinheiro com criptomoedas. Detectou uso indevido de prejuízo fiscal que gerou arrecadação adicional de milhões.
+              </p>
+
+              <p>
+                A plataforma foi desenvolvida por auditores fiscais e analistas tributários usando algoritmos de Python (considerada a linguagem mais avançada em ciência de dados). Ela não processa informações isoladas. Ela mapeia redes complexas de relacionamento entre pessoas, empresas, contas bancárias e até localização geográfica. Consegue identificar "padrões suspeitos" em grupos econômicos inteiros, rastrear empresas de fachada usadas pra emitir notas frias e conectar transações aparentemente desconexas.
+              </p>
+
+              <p>
+                Traduzindo pro mundo real: um atleta que recebe prêmio internacional, tem patrocínio de empresa gringa, vende consultoria online, recebe publi em dólar e ainda movimenta PIX pra comprar equipamento. Tudo isso vira um grafo de relacionamentos pro algoritmo. E se algum padrão não bater com o que a IA considera "normal", você entra na lista de investigação.
+              </p>
+
+              <p>
+                O problema? Ninguém sabe o que é "padrão atípico" pra um campeão mundial de bodybuilding. O sistema foi treinado com dados de assalariados CLT, empresas tradicionais e profissionais liberais convencionais. Atletas internacionais, criadores de conteúdo, profissionais digitais (todos esses perfis são anomalias estatísticas). E anomalias chamam atenção do algoritmo.
+              </p>
+
+              <p>
+                Não existe transparência. Você não recebe uma notificação dizendo "foi marcado porque X, Y e Z". Simplesmente aparece uma fiscalização. E quando ela chega, o ônus da prova é seu (você que precisa provar que não está sonegando, não o contrário).
+              </p>
+
+              <p>
+                A Receita apresenta o Analytics em fóruns internacionais como exemplo de capacidade brasileira de processar dados e obter resultados concretos. Tem até parceria com administrações tributárias de outros países pra trocar informações. É tecnologia de ponta, sem dúvida. Mas aplicada num sistema tributário que ainda trata sucesso financeiro como suspeita.
+              </p>
+
+              <p>
+                Ramon Dino representa isso perfeitamente: o cara colocou o país no mapa do esporte mundial, mas agora vai precisar navegar por um labirinto de obrigações fiscais internacionais, declarações de bens no exterior e códigos de DARF que ninguém entende direito. Um erro de preenchimento pode custar mais caro que a preparação pro Mr. Olympia.
+              </p>
+
+              <p>
+                E o mais irônico de tudo? O mesmo governo que usa o atleta pra fazer marketing esportivo e postar "orgulho nacional" no Twitter é o mesmo que vai tributar o troféu antes da tinta da medalha secar.
+              </p>
+
+              <h2>O paradoxo brasileiro</h2>
+
+              <p>
+                Vamos deixar claro: não se trata de defender que atletas não devam pagar impostos. Óbvio que devem. A questão é como esse imposto é cobrado.
+              </p>
+
+              <p>
+                O caso do Ramon não é sobre isenção fiscal. É sobre um sistema que trata um profissional de alto rendimento como se fosse um apostador de loteria. Que bitributa sem compensar direito. Que não permite dedução de custos operacionais óbvios. Que usa inteligência artificial pra fiscalizar, mas mantém uma burocracia analógica na hora de declarar.
+              </p>
+
+              <p>
+                É sobre um país que celebra a vitória nas redes sociais, mas complica a vida de quem trouxe essa vitória na hora de prestar contas. Que quer ser potência esportiva, mas trata atletas internacionais como anomalias estatísticas suspeitas.
+              </p>
+
+              <p>
+                O Leão ganhou inteligência artificial, ganhou cruzamento de dados em tempo real, ganhou capacidade de processar bilhões de informações. Mas continua operando com uma lógica tributária que não diferencia um campeão mundial de um sonegador profissional. Ambos são "padrões atípicos" pro algoritmo.
+              </p>
+
+              <p>
+                Enquanto isso, atletas viram PJ, criadores de conteúdo abrem CNPJ e o brasileiro médio torce pra não ser marcado por algum padrão que o sistema considera suspeito — mesmo quando tudo está correto.
+              </p>
+
+              <p>
+                Tributar é necessário. Mas tributar com inteligência também deveria ser. Reconhecer custos operacionais legítimos não é privilégio (é bom senso). Permitir deduções que outros países permitem não é favor (é competitividade). E usar tecnologia de ponta pra fiscalizar deveria vir acompanhado de um sistema moderno pra declarar.
+              </p>
+
+              <p>
+                A vitória de Ramon Dino foi construída com disciplina, sacrifício e anos de investimento. Que ele pague seus impostos, sim. Mas que o sistema pelo menos reconheça a diferença entre sucesso e sonegação antes de tratá-los da mesma forma.
+              </p>
+
+              <p>
+                O corpo é dele. O imposto é justo. Mas a burocracia? Essa sim precisa de um shape novo.
               </p>
 
               <hr />
